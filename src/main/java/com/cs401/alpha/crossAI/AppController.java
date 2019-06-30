@@ -4,15 +4,20 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -70,9 +75,39 @@ public class AppController {
 
 	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<User> getAllUsers() {
-		// This returns a JSON or XML with the users
 		return userRepository.findAll();
 	}
+	
+	
+	
+	@PostMapping(path = "/newuser")
+    public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
+		System.out.println("inside new user creation");
+        User u = userRepository.save(user);
+        
+        System.out.println("new user creaetd");
+        String createdUid= u.getUserId();
+        System.out.println(createdUid);
+        //getOneUser();
+        //return u;
+        
+        //return userRepository.findById(u.getUserId());
+        Optional<User> us =  getUserAfterCreate(createdUid);
+        System.out.println(us);
+        System.out.println(us.get().getFirstname());
+       
+        //return null;
+        //return new ResponseEntity<>("Product is created successfully:" + us.get().getFirstname(), HttpStatus.CREATED);
+        
+        return new ResponseEntity<>(us, HttpStatus.CREATED);
+    }
+	
+	@GetMapping
+	public @ResponseBody Optional<User> getUserAfterCreate(String uid) {
+		System.out.println("inside getUserAfterCreate");
+		return userRepository.findById(uid);
+	}
+	
 	
 	@GetMapping(path = "/oneuser")
 	public @ResponseBody Optional<User> getOneUser() {
