@@ -94,7 +94,7 @@ public class AppController {
         //return userRepository.findById(u.getUserId());
         Optional<User> us =  getUserAfterCreate(createdUid);
         System.out.println(us);
-        System.out.println(us.get().getFirstname());
+        System.out.println(us.get().getFirstName());
        
         //return null;
         //return new ResponseEntity<>("Product is created successfully:" + us.get().getFirstname(), HttpStatus.CREATED);

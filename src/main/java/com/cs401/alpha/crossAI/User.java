@@ -24,21 +24,17 @@ public class User {
 	private String userId;
 	private String firstName;
 	private String lastName;
-	private int age;
+	private Integer age;
 	private String gender;
 	private String email;
 	private String phone;
-	private int weight;
-	private long fat;
-	private int height;
-	private long bmi;
-	private long fitscore;
-	private int goal;
+	private Integer weight;
+	private Long fat;
+	private Integer height;
+	private Long bmi;
+	private Long fitscore;
+	private Integer goal;
 	private String status;
-
-	public String getUserId() {
-		return userId;
-	}
 
 	public User() {
 
@@ -50,29 +46,37 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public void setUserId(String userId) {
+	public User(String userId, String firstName, String lastName, Integer age, String gender, String email,
+			String phone, Integer weight, Long fat, Integer height, Long bmi, Long fitscore, Integer goal,
+			String status) {
+		super();
 		this.userId = userId;
-	}
-
-	public String getFirstname() {
-		return firstName;
-	}
-
-	public void setFirstname(String firstname) {
-		this.firstName = firstname;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
+		this.firstName = firstName;
 		this.lastName = lastName;
+		this.age = age;
+		this.gender = gender;
+		this.email = email;
+		this.phone = phone;
+		this.weight = weight;
+		this.fat = fat;
+		this.height = height;
+		this.bmi = bmi;
+		this.fitscore = fitscore;
+		this.goal = goal;
+		this.status = status;
 	}
 
 	@Override
 	public String toString() {
 		return "User{" + "id=" + userId + ", FirstName='" + firstName + '\'' + ", LastName='" + lastName + '\'' + '}';
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getFirstName() {
@@ -83,11 +87,19 @@ public class User {
 		this.firstName = firstName;
 	}
 
-	public int getAge() {
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Integer getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 
@@ -115,51 +127,51 @@ public class User {
 		this.phone = phone;
 	}
 
-	public int getWeight() {
+	public Integer getWeight() {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(Integer weight) {
 		this.weight = weight;
 	}
 
-	public long getFat() {
+	public Long getFat() {
 		return fat;
 	}
 
-	public void setFat(long fat) {
+	public void setFat(Long fat) {
 		this.fat = fat;
 	}
 
-	public int getHeight() {
+	public Integer getHeight() {
 		return height;
 	}
 
-	public void setHeight(int height) {
+	public void setHeight(Integer height) {
 		this.height = height;
 	}
 
-	public long getBmi() {
+	public Long getBmi() {
 		return bmi;
 	}
 
-	public void setBmi(long bmi) {
+	public void setBmi(Long bmi) {
 		this.bmi = bmi;
 	}
 
-	public long getFitscore() {
+	public Long getFitscore() {
 		return fitscore;
 	}
 
-	public void setFitscore(long fitscore) {
+	public void setFitscore(Long fitscore) {
 		this.fitscore = fitscore;
 	}
 
-	public int getGoal() {
+	public Integer getGoal() {
 		return goal;
 	}
 
-	public void setGoal(int goal) {
+	public void setGoal(Integer goal) {
 		this.goal = goal;
 	}
 
@@ -170,6 +182,8 @@ public class User {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	
 
 	/*
 	 * public User findauser(String uid) {
