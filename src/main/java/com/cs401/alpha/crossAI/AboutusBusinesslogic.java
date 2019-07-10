@@ -8,8 +8,11 @@ public class AboutusBusinesslogic {
 	public List<Aboutus> getAboutusList()
 	{
 		List<Aboutus> listus = new ArrayList<>();
-		listus.add(new Aboutus("Pratysuh Panda", "fe8394"));
-		listus.add(new Aboutus("Tony Stark", "1234"));
+		listus.add(new Aboutus("Pratysuh Panda", ""));
+		listus.add(new Aboutus("Raoni Marcelino", ""));
+		listus.add(new Aboutus("Jeremy Lee", ""));
+		listus.add(new Aboutus("Faisal Alnafea", ""));
+		listus.add(new Aboutus("Ahmo Ahmetovic", ""));
 		
 		return listus;
 	}
