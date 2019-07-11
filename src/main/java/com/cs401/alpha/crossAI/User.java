@@ -22,6 +22,7 @@ public class User {
 
 	@Id
 	private String userId;
+	private String password;
 	private String firstName;
 	private String lastName;
 	private Integer age;
@@ -46,11 +47,12 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public User(String userId, String firstName, String lastName, Integer age, String gender, String email,
-			String phone, Integer weight, Long fat, Integer height, Long bmi, Long fitscore, Integer goal,
+	public User(String userId, String password, String firstName, String lastName, Integer age, String gender,
+			String email, String phone, Integer weight, Long fat, Integer height, Long bmi, Long fitscore, Integer goal,
 			String status) {
 		super();
 		this.userId = userId;
+		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
@@ -182,8 +184,14 @@ public class User {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	/*
 	 * public User findauser(String uid) {

@@ -10,15 +10,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +45,13 @@ public class AppController {
 	public String test() {
 		System.out.println("Welcome test");
 		return "test";
+	}
+
+	@RequestMapping("/login")
+	@GetMapping("/login")
+	public String Login() {
+		System.out.println("Welcome Login");
+		return "login";
 	}
 
 	@RequestMapping("home")
@@ -129,29 +140,74 @@ public class AppController {
 		return userRepository.findAll();
 	}
 
-	@PostMapping(path = "/newuser")
-	public ResponseEntity<Object> createUser(@Valid @RequestBody User user) {
+	@PostMapping(path = "/newuserrest")
+	public ResponseEntity<Object> createUserrest(@Valid @RequestBody User user) {
+
 		System.out.println("inside new user creation");
 		User u = userRepository.save(user);
 
 		System.out.println("new user creaetd");
 		String createdUid = u.getUserId();
 		System.out.println(createdUid);
-		// getOneUser();
-		// return u;
 
-		// return userRepository.findById(u.getUserId());
 		Optional<User> us = getUserAfterCreate(createdUid);
 		System.out.println(us);
 		System.out.println(us.get().getFirstName());
 
-		// return null;
-		// return new ResponseEntity<>("Product is created successfully:" +
-		// us.get().getFirstname(), HttpStatus.CREATED);
-
 		return new ResponseEntity<>(us, HttpStatus.CREATED);
 	}
 
+	@PostMapping(path = "/newuser")
+	public @ResponseBody ModelAndView createUser(@Valid User user) {
+
+		ModelAndView mv = new ModelAndView();
+		
+		if (user.getAge() <13)
+		{
+			System.out.println("user too young");
+		}
+		
+		
+		
+		
+		User u = userRepository.save(user);
+
+		String createdUid = u.getUserId();
+		System.out.println(createdUid);
+
+		Optional<User> us = getUserAfterCreate(createdUid);
+		System.out.println(us);
+		System.out.println(us.get().getFirstName());
+
+		// return new ResponseEntity<>(us, HttpStatus.CREATED);
+
+		mv.addObject("userid", us.get().getUserId());
+		mv.addObject("upassword", us.get().getPassword());
+		mv.addObject("firstName", us.get().getFirstName());
+		mv.addObject("lastName", us.get().getLastName());
+		mv.addObject("email", us.get().getEmail());
+		mv.addObject("phone", us.get().getPhone());
+		mv.addObject("gender", us.get().getGender());
+		mv.addObject("age", us.get().getAge());
+		mv.addObject("height", us.get().getHeight());
+
+		mv.setViewName("userAddedSucess");
+		return mv;
+	}
+
+	
+	@GetMapping (path = "/adminhome")
+	public String adminhome(String uid) {
+		System.out.println("inside admin home");
+		return "adminHome";
+	}
+	
+	@GetMapping (path = "/nonadminhome")
+	public String nonadminhome(String uid) {
+		System.out.println("inside non admin home");
+		return "nonadminHome";
+	}
+	
 //	@GetMapping
 	public @ResponseBody Optional<User> getUserAfterCreate(String uid) {
 		System.out.println("inside getUserAfterCreate");
@@ -166,6 +222,12 @@ public class AppController {
 	@GetMapping(path = "/allexcercises")
 	public @ResponseBody Iterable<exercise> getAllExercise() {
 		return excerciseRepository.findAll();
+	}
+
+	@GetMapping(path = "/registration")
+	public String registerUser() {
+		return "registration";
+
 	}
 
 	/*
