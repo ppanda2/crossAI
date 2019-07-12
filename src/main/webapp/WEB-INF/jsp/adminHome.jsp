@@ -13,6 +13,25 @@
 <button onclick="addUsersFunc()">Add Users</button>
 <button/> EDIT DETAILS <button/>
 <button onclick="addExcercise()">Add Exercises</button>
+
+<button action = "storeJsoninDatbase">Completed Class</button>
+<%-- <button action = "generateJson">CheckIn Complete</button> --%>
+<%-- This is JSP comment --%>
+
+<%--<input type="button"  onclick="location.href= generateJson" value="CheckIn Complete" >--%>
+
+<form action="startCheckIn">
+	<input type ="submit" value="startCheckIn" >
+</form>
+
+<form action="generateJson">
+	<input type ="submit" value="CheckInComplete" >
+</form>
+
+
+
+
+
 <button> EDIT/DELETE <button/>
 <button> VIEW HISTORY <button/>
 <button> ANALYZ SOCIAL MEDIA DATA <button/>

@@ -6,31 +6,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
 @Entity
-public class exercise {
-	
+public class Exercise {
 
 	@Id
-  	@GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer idexercise;
-	
-	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer idexercise;
+
 	private String exercise;
-	
-    private String exercisedesc;
-    
-	public exercise(String exercise, String exercisedesc) {
+
+	private String exercisedesc;
+
+	public Exercise(String exercise, String exercisedesc) {
 		this.exercise = exercise;
 		this.exercisedesc = exercisedesc;
 	}
 
-	
-
 	public void setIdexcercise(Integer idexcercise) {
 		this.idexercise = idexcercise;
 	}
-	
+
 	public void setExcercise(String excercise) {
 		this.exercise = excercise;
 	}
@@ -38,7 +33,7 @@ public class exercise {
 	public String getExcercisedesc() {
 		return exercisedesc;
 	}
-	
+
 	public Integer getIdexcercise() {
 		return idexercise;
 	}
@@ -46,8 +41,6 @@ public class exercise {
 	public String getExcercise() {
 		return exercise;
 	}
-
-
 
 	public void setExcercisedesc(String excercisedesc) {
 		this.exercisedesc = excercisedesc;
@@ -58,9 +51,5 @@ public class exercise {
 		return "Excercise [idexcercise=" + idexercise + ", excercise=" + exercise + ", excercisedesc=" + exercisedesc
 				+ "]";
 	}
-	
-    
-	
-	
 
 }

@@ -4,12 +4,14 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Exercise added successfully</title>
+<title>Json file created</title>
 </head>
 <body>
- Exercise added successfully with exercise id = ${uid} 
- 
- <button onclick="backtoadminscreen()">backtoLogin</button>
+Json file created
+
+
+
+<button onclick="backtoadminscreen()">backtoLogin</button>
 
 	<script>
 		function backtoadminscreen() {

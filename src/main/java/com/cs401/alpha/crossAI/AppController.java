@@ -1,11 +1,16 @@
 package com.cs401.alpha.crossAI;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +32,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import com.cs401.alpha.crossAI.User;
 import com.cs401.alpha.crossAI.UserRepository;
@@ -91,7 +100,7 @@ public class AppController {
 		ModelAndView mv = new ModelAndView();
 		System.out.println("inside addexercise from form view");
 		String uid = "";
-		exercise exe = new exercise(exercise, exercisedesc);
+		Exercise exe = new Exercise(exercise, exercisedesc);
 		System.out.println(exe.getExcercise());
 		System.out.println(exe.getExcercisedesc());
 
@@ -102,6 +111,136 @@ public class AppController {
 		mv.addObject("uid", uid);
 		mv.setViewName("exerciseAddedSucess");
 		return mv;
+	}
+
+	@RequestMapping("/startCheckIn")
+	public void startCheckIn() {
+
+		// return startCheckIn;
+
+	}
+
+	@RequestMapping("/stopCheckIn") // this should generate the json file with user ids, exercises and other details
+	public String stopCheckIn(Model model) throws FileNotFoundException {
+
+		System.out.println("inside stop chekin");
+
+		JSONObject joo = new JSONObject();
+		joo = generateJson();
+
+		System.out.println(joo);
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		String jsonString = "";
+		try {
+			mapper.enable(SerializationFeature.INDENT_OUTPUT);
+			jsonString = mapper.writeValueAsString(joo);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		String dbStoredStatus = storeJsoninDatbase(joo); // the json that is created needs to loaded in database. this call is for that purpose
+		//System.out.println(jsonString);
+
+		model.addAttribute("jsonexer", jsonString);
+		return "stopCheckIn";
+
+	}
+
+	//@RequestMapping("/storeJsoninDatbase") // class complete, store json in database
+	public String storeJsoninDatbase(JSONObject joo) {
+		// have to store json file in databse
+		// have to extract user names and exericse dates, etx and store in db.
+		
+		
+		return "success";
+	}
+
+	@RequestMapping("/generateJson") // checkin complete, generate json
+	public JSONObject generateJson() throws FileNotFoundException {
+		System.out.println("inside generateJson");
+
+		Exercise exercise1 = new Exercise("pushup", "chest");
+		Exercise exercise2 = new Exercise("pullup", "back");
+		Exercise exercise3 = new Exercise("jumping jack", "cardio");
+
+		ArrayList<Exercise> arraylist1 = new ArrayList<Exercise>();
+
+		arraylist1.add(exercise1);
+		arraylist1.add(exercise2);
+
+		ArrayList<Exercise> arraylist2 = new ArrayList<Exercise>();
+		arraylist2.add(exercise1);
+		arraylist2.add(exercise2);
+		arraylist2.add(exercise3);
+
+		ArrayList<Exercise> arraylist3 = new ArrayList<Exercise>();
+		arraylist3.add(exercise3);
+
+		Types type1 = new Types(5, arraylist1);
+		Types type2 = new Types(5, arraylist2);
+		Types type3 = new Types(5, arraylist3);
+
+		ExerciseTypes exerciseTypes1 = new ExerciseTypes("warmup", type1);
+		ExerciseTypes exerciseTypes2 = new ExerciseTypes("Tabata", type2);
+		ExerciseTypes exerciseTypes3 = new ExerciseTypes("cooldown", type3);
+
+		ArrayList<ExerciseTypes> ET = new ArrayList<ExerciseTypes>();
+		ET.add(exerciseTypes1);
+		ET.add(exerciseTypes2);
+		ET.add(exerciseTypes3);
+
+		ArrayList<String> uids = new ArrayList<String>();
+		uids.add("user1");
+		uids.add("user2");
+		uids.add("user3");
+
+		ExerciseSession exerciseSession = new ExerciseSession(1, "july 11 2019", "16:00", "xfit", uids, ET);
+
+		System.out.println(exerciseSession.getExercisetypes().size());
+
+		JSONObject jo = new JSONObject();
+		jo.put("id", exerciseSession.getId());
+		jo.put("date", exerciseSession.getDate());
+		jo.put("time", exerciseSession.getTime());
+		jo.put("name", exerciseSession.getName());
+		jo.put("userids", exerciseSession.getUserids());
+
+		JSONArray joexternal = new JSONArray();
+
+		for (ExerciseTypes et : exerciseSession.getExercisetypes()) {
+
+			JSONObject jointernal = new JSONObject();
+
+			System.out.println(et.getName() + et.getTypes());
+
+			jointernal.put("name", et.getName());
+			jointernal.put("duration", et.getTypes().getDuration());
+
+			ArrayList<String> exercs = new ArrayList<String>();
+
+			for (Exercise e : et.getTypes().getExercises()) {
+
+				JSONObject jointernalinternal = new JSONObject();
+				exercs.add(e.getExcercise());
+			}
+
+			jointernal.put("excercises", exercs);
+			joexternal.add(jointernal);
+
+		}
+		jo.put("exercisetypes", joexternal);
+
+		PrintWriter pw = new PrintWriter("ExerciseClass.json");
+		pw.write(jo.toJSONString());
+
+		pw.flush();
+		pw.close();
+
+		return jo;
+		// return "generatedJsonFile";
+
 	}
 
 	/**
@@ -161,15 +300,11 @@ public class AppController {
 	public @ResponseBody ModelAndView createUser(@Valid User user) {
 
 		ModelAndView mv = new ModelAndView();
-		
-		if (user.getAge() <13)
-		{
+
+		if (user.getAge() < 13) {
 			System.out.println("user too young");
 		}
-		
-		
-		
-		
+
 		User u = userRepository.save(user);
 
 		String createdUid = u.getUserId();
@@ -195,19 +330,18 @@ public class AppController {
 		return mv;
 	}
 
-	
-	@GetMapping (path = "/adminhome")
+	@GetMapping(path = "/adminhome")
 	public String adminhome(String uid) {
 		System.out.println("inside admin home");
 		return "adminHome";
 	}
-	
-	@GetMapping (path = "/nonadminhome")
+
+	@GetMapping(path = "/nonadminhome")
 	public String nonadminhome(String uid) {
 		System.out.println("inside non admin home");
 		return "nonadminHome";
 	}
-	
+
 //	@GetMapping
 	public @ResponseBody Optional<User> getUserAfterCreate(String uid) {
 		System.out.println("inside getUserAfterCreate");
@@ -220,7 +354,7 @@ public class AppController {
 	}
 
 	@GetMapping(path = "/allexcercises")
-	public @ResponseBody Iterable<exercise> getAllExercise() {
+	public @ResponseBody Iterable<Exercise> getAllExercise() {
 		return excerciseRepository.findAll();
 	}
 

@@ -24,6 +24,14 @@
 	
 </table>
 
+<button onclick="backLoginFunc()">backtoLogin</button>
+
+	<script>
+		function backLoginFunc() {
+			location.replace("http://localhost:8080/login")
+		}
+	</script>
+
 
 
 
