@@ -8,6 +8,10 @@
 </head>
 <body>
 
+
+
+
+
 <form action="stopCheckIn">
 	<input type ="submit" value="stopCheckIn" >
 </form>

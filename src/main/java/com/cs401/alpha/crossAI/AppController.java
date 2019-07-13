@@ -114,9 +114,9 @@ public class AppController {
 	}
 
 	@RequestMapping("/startCheckIn")
-	public void startCheckIn() {
+	public String startCheckIn() {
 
-		// return startCheckIn;
+		return "startCheckIn";
 
 	}
 
@@ -140,20 +140,21 @@ public class AppController {
 			e.printStackTrace();
 		}
 
-		String dbStoredStatus = storeJsoninDatbase(joo); // the json that is created needs to loaded in database. this call is for that purpose
-		//System.out.println(jsonString);
+		String dbStoredStatus = storeJsoninDatbase(joo); // the json that is created needs to loaded in database. this
+															// call is for that purpose
+		// System.out.println(jsonString);
 
 		model.addAttribute("jsonexer", jsonString);
 		return "stopCheckIn";
 
 	}
 
-	//@RequestMapping("/storeJsoninDatbase") // class complete, store json in database
+	// @RequestMapping("/storeJsoninDatbase") // class complete, store json in
+	// database
 	public String storeJsoninDatbase(JSONObject joo) {
 		// have to store json file in databse
 		// have to extract user names and exericse dates, etx and store in db.
-		
-		
+
 		return "success";
 	}
 
@@ -296,7 +297,22 @@ public class AppController {
 		return new ResponseEntity<>(us, HttpStatus.CREATED);
 	}
 
-	@PostMapping(path = "/newuser")
+	/**
+	 * This end point is called from login page
+	 * 
+	 * @return registration page
+	 */
+	@GetMapping(path = "/registration") // calls registration form that has form action newuser
+	public String registerUser() {
+		return "registration";
+	}
+
+	/**
+	 * This end point is called from registration
+	 * 
+	 * @return userAddedSucess page
+	 */
+	@PostMapping(path = "/newuser") // is called from registration
 	public @ResponseBody ModelAndView createUser(@Valid User user) {
 
 		ModelAndView mv = new ModelAndView();
@@ -353,15 +369,34 @@ public class AppController {
 		return userRepository.findById("user1");
 	}
 
+	@RequestMapping("/getUserDetails")
+	public ModelAndView getUserDetails(@RequestParam String uid) {
+		ModelAndView mv = new ModelAndView();
+
+		System.out.println(uid);
+		Optional<User> us = userRepository.findById(uid);
+
+		System.out.println("showing user");
+		System.out.println(us.toString());
+
+		mv.addObject("userid", us.get().getUserId());
+		mv.addObject("upassword", us.get().getPassword());
+		mv.addObject("firstName", us.get().getFirstName());
+		mv.addObject("lastName", us.get().getLastName());
+		mv.addObject("email", us.get().getEmail());
+		mv.addObject("phone", us.get().getPhone());
+		mv.addObject("gender", us.get().getGender());
+		mv.addObject("age", us.get().getAge());
+		mv.addObject("height", us.get().getHeight());
+
+		// mv.addObject(user);
+		mv.setViewName("showUserDetails");
+		return mv;
+	}
+
 	@GetMapping(path = "/allexcercises")
 	public @ResponseBody Iterable<Exercise> getAllExercise() {
 		return excerciseRepository.findAll();
-	}
-
-	@GetMapping(path = "/registration")
-	public String registerUser() {
-		return "registration";
-
 	}
 
 	/*

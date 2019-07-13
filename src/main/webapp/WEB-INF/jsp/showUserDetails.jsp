@@ -1,18 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-
-<title>User successfully added</title>
-
-
-
+<title>Insert title here</title>
 </head>
 <body>
-	<h1>User successfully added</h1>
 
+<h1 align = "center"> User Details </h1>
 
 	<form>
 		<fieldset>
@@ -41,7 +37,8 @@
 					value="${gender}" />
 			</p>
 			<p>
-				<label>age</label> <input type="text" name="age" value="${age}" />
+				<label>age</label> <input type="text" name="age" 
+				value="${age}" />
 			</p>
 			<p>
 				<label>height</label> <input type="text" name="height"
@@ -49,13 +46,12 @@
 			</p>
 		</fieldset>
 	</form>
-	
-	
-		<button onclick="backLoginFunc()">backtoLogin</button>
+
+<button onclick="backtoadminscreen()">backtoadmin</button>
 
 	<script>
-		function backLoginFunc() {
-			location.replace("http://localhost:8080/login")
+		function backtoadminscreen() {
+			location.replace("http://localhost:8080/adminhome")
 		}
 	</script>
 

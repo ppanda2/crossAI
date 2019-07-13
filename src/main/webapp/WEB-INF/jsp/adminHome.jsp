@@ -10,7 +10,7 @@
 
 <h1 allign=centre>Admin Home</h1>
 
-<button onclick="addUsersFunc()">Add Users</button>
+
 <button/> EDIT DETAILS <button/>
 <button onclick="addExcercise()">Add Exercises</button>
 
@@ -28,8 +28,15 @@
 	<input type ="submit" value="CheckInComplete" >
 </form>
 
+<br>
+<br>
 
+	<form action="getUserDetails">
+		<label>enter userid here</label>  <input type="text" name=uid><br> <input type="submit"><br>
 
+	</form>
+<br>
+<br>
 
 
 <button> EDIT/DELETE <button/>
