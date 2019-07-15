@@ -223,8 +223,8 @@ public class AppController {
 
 	@RequestMapping("/stopCheckIn") // this should generate the json file with user ids, exercises and other
 									// details. calls generatejson
-	public String stopCheckIn(@RequestParam(value = "userIds", required = false) String[] userIds, Model model)
-			throws FileNotFoundException {
+	public String stopCheckIn(@RequestParam(value = "userIds", required = false) String[] userIds, Model model,
+			String date, String time, String nameofclass) throws FileNotFoundException, SQLException {
 
 		System.out.println(userIds.length);
 		for (int i = 0; i < userIds.length; i++) {
@@ -234,7 +234,7 @@ public class AppController {
 		System.out.println("inside stop chekin");
 
 		JSONObject joo = new JSONObject();
-		joo = generateJson();
+		joo = generateJson(userIds, date, time, nameofclass);
 
 		System.out.println(joo);
 
@@ -248,8 +248,9 @@ public class AppController {
 			e.printStackTrace();
 		}
 
-		String dbStoredStatus = storeJsoninDatbase(joo); // the json that is created needs to loaded in database. this
-															// call is for that purpose
+		String dbStoredStatus = storeJsoninDatbase(joo, userIds); // the json that is created needs to loaded in
+																	// database. this
+		// call is for that purpose
 		// System.out.println(jsonString);
 
 		model.addAttribute("jsonexer", jsonString);
@@ -259,15 +260,28 @@ public class AppController {
 
 	// @RequestMapping("/storeJsoninDatbase") // class complete, store json in
 	// database
-	public String storeJsoninDatbase(JSONObject joo) {
+	public String storeJsoninDatbase(JSONObject joo, String[] uids) {
 		// have to store json file in databse
 		// have to extract user names and exericse dates, etx and store in db.
+
+		System.out.println("inside storeJsoninDatbase");
+
+		System.out.println(joo.get("id"));
+		System.out.println(joo.get("userids"));
+		System.out.println(joo.get("date"));
+		System.out.println(joo.get("time"));
+		System.out.println(joo.get("name"));
+
+		System.out.println(joo.get("exercisetypes"));
+
+		// calling to store in database with above values;
 
 		return "success";
 	}
 
 	@RequestMapping("/generateJson") // checkin complete, generate json
-	public JSONObject generateJson() throws FileNotFoundException {
+	public JSONObject generateJson(String[] userIds, String date, String time, String nameofclass)
+			throws FileNotFoundException, SQLException {
 		System.out.println("inside generateJson");
 
 		Exercise exercise1 = new Exercise("pushup", "chest");
@@ -301,11 +315,23 @@ public class AppController {
 		ET.add(exerciseTypes3);
 
 		ArrayList<String> uids = new ArrayList<String>();
-		uids.add("user1");
-		uids.add("user2");
-		uids.add("user3");
 
-		ExerciseSession exerciseSession = new ExerciseSession(1, "july 11 2019", "16:00", "xfit", uids, ET);
+		System.out.println(userIds.length);
+		for (int i = 0; i < userIds.length; i++) {
+			System.out.println("userids " + userIds[i]);
+			uids.add(userIds[i]);
+		}
+		// uids.add("user1");
+		// uids.add("user2");
+		// uids.add("user3");
+
+		// get the latest id from hist table.
+		LatestIdFromHisto lifh = new LatestIdFromHisto();
+		int latestId4mHisto = lifh.getid();
+
+		System.out.println("latestId4mHisto : " + latestId4mHisto);
+
+		ExerciseSession exerciseSession = new ExerciseSession(latestId4mHisto, date, time, nameofclass, uids, ET);
 
 		System.out.println(exerciseSession.getExercisetypes().size());
 

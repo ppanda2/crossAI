@@ -28,6 +28,13 @@
 			<br>
 		</c:forEach>
 
+	<label>Enter date in Month, Date, Year</label>  <input type="text" name=date><br>
+	<label>Enter time in 24 hours format</label>  <input type="text" name=time><br>
+	<label>Enter name of class</label>  <input type="text" name=nameofclass><br>
+	
+	
+	
+	
 		<input type="submit" value="Submit">
 	</form>
 
