@@ -7,13 +7,13 @@ import javax.persistence.Id;
 
 @Entity
 public class Goal {
-	
+
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int goalId;
-	
+
 	private String goal;
-	
+
 	private String goalDesc;
 
 	public int getGoalId() {
@@ -39,7 +39,5 @@ public class Goal {
 	public void setGoalDesc(String goalDesc) {
 		this.goalDesc = goalDesc;
 	}
-	
-	
 
 }

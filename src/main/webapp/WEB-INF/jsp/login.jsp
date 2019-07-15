@@ -8,17 +8,19 @@
 </head>
 <body>
 	<h1>CrossAi</h1>
-	<form>
+	<form action = "checklogin" method="POST">
 		<fieldset>
 			<p>
-				<label>User Name</label> <input type="text" id="uid" />
+				<label>User Name</label> <input type="text" name="userId">
 			</p>
 			<p>
-				<label>Password</label> <input type="password" id="myPwd" />
+				<label>Password</label> <input type="text" name="password">
 			</p>
-			<input type="submit" />
+			<input type="submit"  value = "submit"/>
 		</fieldset>
 	</form>
+	
+	${InvalidUserOrPassword}
 
 	<h2>Redirect to AboutUS</h2>
 	

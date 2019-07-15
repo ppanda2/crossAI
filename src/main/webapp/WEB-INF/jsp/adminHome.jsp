@@ -31,6 +31,7 @@
 <br>
 <br>
 
+Search user Details<br>
 	<form action="getUserDetails">
 		<label>enter userid here</label>  <input type="text" name=uid><br> <input type="submit"><br>
 

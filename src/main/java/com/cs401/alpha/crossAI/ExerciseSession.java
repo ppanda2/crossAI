@@ -2,10 +2,7 @@ package com.cs401.alpha.crossAI;
 
 import java.util.ArrayList;
 
-
-
 public class ExerciseSession {
-	
 
 	public ExerciseSession(Integer id, String date, String time, String name, ArrayList<String> userids,
 			ArrayList<ExerciseTypes> exercisetypes) {
@@ -22,10 +19,9 @@ public class ExerciseSession {
 	private String date; // stores the date
 	private String time; // time in 24 hour format
 	private String name; // yoga, swim, etc
-	
-	
-	ArrayList<String> userids = new ArrayList<String>(); //array of userids
-	
+
+	ArrayList<String> userids = new ArrayList<String>(); // array of userids
+
 	ArrayList<ExerciseTypes> exercisetypes = new ArrayList<ExerciseTypes>();
 
 	public Integer getId() {
@@ -74,8 +70,6 @@ public class ExerciseSession {
 
 	public void setExercisetypes(ArrayList<ExerciseTypes> exercisetypes) {
 		this.exercisetypes = exercisetypes;
-	} 
-	
-
+	}
 
 }

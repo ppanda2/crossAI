@@ -38,12 +38,10 @@ public class User {
 	private Long fitscore;
 	private Integer goal;
 	private String status;
-	
-	
-	@ManyToMany (mappedBy = "participates")
+
+	@ManyToMany(mappedBy = "participates")
 	Set<Histo> participatedClasses;
 
-	
 	public User() {
 
 	}
@@ -75,7 +73,6 @@ public class User {
 		this.status = status;
 	}
 
-	
 	public String getUserId() {
 		return userId;
 	}

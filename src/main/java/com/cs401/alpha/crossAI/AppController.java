@@ -2,7 +2,11 @@ package com.cs401.alpha.crossAI;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -63,6 +67,45 @@ public class AppController {
 		return "login";
 	}
 
+	@PostMapping("/checklogin")
+	public ModelAndView checklogin(User user, Model model) {
+		model.addAttribute("user", user);
+
+		String userId = user.getUserId();
+		String password = user.getPassword();
+		System.out.println(userId);
+		ModelAndView mv = new ModelAndView();
+		CheckUserRole cur = new CheckUserRole();
+
+		String usertype = "";
+
+		try {
+			usertype = cur.CheckUser(userId, password);
+
+		} catch (SQLException e) {
+
+			System.out.println("in exception");
+			e.printStackTrace();
+		}
+
+		System.out.println("usertype=" + usertype);
+		// boolean userisadmin = false;
+
+		String InvalidUserOrPassword = null;
+		if (usertype.equalsIgnoreCase("yesAdmin")) {
+			mv.setViewName("adminHome");
+			return mv;
+		} else if (usertype.equalsIgnoreCase("NoAdmin")) {
+			mv.setViewName("nonAdminHome");
+			return mv;
+		} else {
+			mv.setViewName("login");
+			InvalidUserOrPassword = "User or password does not exists";
+			mv.addObject("InvalidUserOrPassword", InvalidUserOrPassword.toString());
+			return mv;
+		}
+	}
+
 	@RequestMapping("home")
 	public ModelAndView home(@RequestParam(value = "name", required = false) String myName,
 			@RequestParam(value = "age", required = false) Integer myAge) {
@@ -113,15 +156,80 @@ public class AppController {
 		return mv;
 	}
 
+	// adminhome -> start chekcin-> stop checkin
+
 	@RequestMapping("/startCheckIn")
-	public String startCheckIn() {
+	public String startCheckIn(Model model) {
+
+		ArrayList<String> allsuers = new ArrayList<String>();
+
+		String myDriver = "org.gjt.mm.mysql.Driver";
+		String myUrl = "jdbc:mysql://localhost:3306/alphadb";
+
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(myUrl, "root", "root");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		String query = "SELECT userId FROM alphadb.user ";
+
+		System.out.println(query); // create the java statement
+		Statement st = null;
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		ResultSet rs = null;
+		try {
+			rs = st.executeQuery(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String tempid = null;
+		try {
+			rs.next();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while (rs.next()) {
+				try {
+					tempid = rs.getString(1);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				allsuers.add(tempid);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// return rs.getString("firstName");
+
+		model.addAttribute("allusers", allsuers);
 
 		return "startCheckIn";
 
 	}
 
-	@RequestMapping("/stopCheckIn") // this should generate the json file with user ids, exercises and other details
-	public String stopCheckIn(Model model) throws FileNotFoundException {
+	@RequestMapping("/stopCheckIn") // this should generate the json file with user ids, exercises and other
+									// details. calls generatejson
+	public String stopCheckIn(@RequestParam(value = "userIds", required = false) String[] userIds, Model model)
+			throws FileNotFoundException {
+
+		System.out.println(userIds.length);
+		for (int i = 0; i < userIds.length; i++) {
+			System.out.println("userids " + userIds[i]);
+		}
 
 		System.out.println("inside stop chekin");
 
