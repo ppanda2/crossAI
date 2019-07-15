@@ -248,8 +248,9 @@ public class AppController {
 			e.printStackTrace();
 		}
 
-		String dbStoredStatus = storeJsoninDatbase(joo, userIds); // the json that is created needs to loaded in
-																	// database. this
+		String dbStoredStatus = storeJsoninDatbase(joo, userIds, jsonString); // the json that is created needs to
+																				// loaded in
+		// database. this
 		// call is for that purpose
 		// System.out.println(jsonString);
 
@@ -260,7 +261,7 @@ public class AppController {
 
 	// @RequestMapping("/storeJsoninDatbase") // class complete, store json in
 	// database
-	public String storeJsoninDatbase(JSONObject joo, String[] uids) {
+	public String storeJsoninDatbase(JSONObject joo, String[] uids, String jsonString) {
 		// have to store json file in databse
 		// have to extract user names and exericse dates, etx and store in db.
 
@@ -275,6 +276,11 @@ public class AppController {
 		System.out.println(joo.get("exercisetypes"));
 
 		// calling to store in database with above values;
+
+		UserHistoRel uhr = new UserHistoRel();
+		uhr.saveInHistoAndRelTable(joo, uids, jsonString);
+
+		System.out.println("came out of Saving");
 
 		return "success";
 	}
@@ -321,9 +327,6 @@ public class AppController {
 			System.out.println("userids " + userIds[i]);
 			uids.add(userIds[i]);
 		}
-		// uids.add("user1");
-		// uids.add("user2");
-		// uids.add("user3");
 
 		// get the latest id from hist table.
 		LatestIdFromHisto lifh = new LatestIdFromHisto();
