@@ -507,7 +507,7 @@ public class AppController {
 	}
 
 	@RequestMapping("/getUserDetails")
-	public ModelAndView getUserDetails(@RequestParam String uid) {
+	public ModelAndView getUserDetails(@RequestParam String uid) throws SQLException {
 		ModelAndView mv = new ModelAndView();
 
 		System.out.println(uid);
@@ -527,6 +527,13 @@ public class AppController {
 		mv.addObject("height", us.get().getHeight());
 
 		// mv.addObject(user);
+		
+		UserHistoRel uhr = new UserHistoRel();
+		List<Histo> hist = uhr.query4mRel4Userid(uid);
+		System.out.println(hist);
+		
+		mv.addObject("history", hist);
+		
 		mv.setViewName("showUserDetails");
 		return mv;
 	}

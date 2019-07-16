@@ -4,9 +4,11 @@ import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONObject;
 
@@ -72,7 +74,7 @@ public class UserHistoRel {
 			// the mysql insert statement
 
 			System.out.println("saving in rel table");
-			
+
 			System.out.println(userIds.length);
 			for (int i = 0; i < userIds.length; i++) {
 				System.out.println("userids " + userIds[i]);
@@ -97,10 +99,57 @@ public class UserHistoRel {
 		}
 	}
 
-	public ArrayList<String> query4mRel4Userid(String uid) {
+	public List<Histo> query4mRel4Userid(String uid) throws SQLException {
 		// TODO return all dates/exercises from histo table based on histid
 
-		return null;
+		
+		System.out.println("CheckUser");
+
+		String myDriver = "org.gjt.mm.mysql.Driver";
+		String myUrl = "jdbc:mysql://localhost:3306/alphadb";
+
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(myUrl, "root", "root");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String query = "SELECT alphadb.histo.* FROM alphadb.user_hist_rel, alphadb.histo  where alphadb.user_hist_rel.userid ="
+				+ "\"" + uid + "\"" + "and alphadb.user_hist_rel.histid  = alphadb.histo.histID";
+
+		
+		System.out.println(query); // create the java statement
+		Statement st = null;
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		ResultSet rs = null;
+		try {
+			rs = st.executeQuery(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+		List<Histo> histdetails = new ArrayList<>();
+		
+		rs.next(); 
+		
+		while(rs.next())
+		{
+		System.out.println(rs.getString(2));
+		histdetails.add(new Histo(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
+		}
+		
+		//System.out.println(rs);
+		
+		return histdetails;
 
 	}
 

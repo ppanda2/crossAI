@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
+	<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix ="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,7 @@
 </head>
 <body>
 
-<h1 align = "center"> User Details </h1>
+	<h1 align="center">User Details</h1>
 
 	<form>
 		<fieldset>
@@ -37,8 +38,7 @@
 					value="${gender}" />
 			</p>
 			<p>
-				<label>age</label> <input type="text" name="age" 
-				value="${age}" />
+				<label>age</label> <input type="text" name="age" value="${age}" />
 			</p>
 			<p>
 				<label>height</label> <input type="text" name="height"
@@ -47,7 +47,27 @@
 		</fieldset>
 	</form>
 
-<button onclick="backtoadminscreen()">backtoadmin</button>
+History
+	<table border="1" cellpadding="10">
+		<tr>
+			<th>date</th>
+			<th>time</th>
+			<th>exerciseName</th>
+			<th>exercise</th>
+
+		</tr>
+		<c:forEach items="${history}" var="us">
+			<tr>
+				<td>${us.date}</td>
+				<td>${us.time}</td>
+				<td>${us.exerciseName}</td>
+				<td>${us.exercise}</td>
+			</tr>
+		</c:forEach>
+
+	</table>
+
+	<button onclick="backtoadminscreen()">backtoadmin</button>
 
 	<script>
 		function backtoadminscreen() {

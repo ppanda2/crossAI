@@ -24,9 +24,7 @@
 	<input type ="submit" value="startCheckIn" >
 </form>
 
-<form action="generateJson">
-	<input type ="submit" value="CheckInComplete" >
-</form>
+
 
 <br>
 <br>
