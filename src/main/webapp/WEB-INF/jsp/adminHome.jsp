@@ -31,21 +31,20 @@
 	<br>
 	<form action="getUserDetails">
 		<label>enter userid here: </label> <input type="text" name=uid>
-		<input type="submit"><br>
+		<input type="submit" value = "Search"><br>
 
 	</form>
 	<br>
 	<br>
-	<form>
-		<button onclick="gatherfeedback()">Gather Feedback</button>
+
+
+
+	<form action="getfeedback">
+		<input type="submit" value = "Gather Feedback"><br>
 	</form>
 	<br>
 
-	<script>
-		function gatherfeedback() {
-			location.replace("http://localhost:8080/getfeedback")
-		}
-	</script>
+
 
 
 	<button onclick="backLoginFunc()">Back to Login Page</button>

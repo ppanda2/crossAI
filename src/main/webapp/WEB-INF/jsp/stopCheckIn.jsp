@@ -20,12 +20,13 @@ ${jsonexer}
 </code>
 </pre>
 
+ <button onclick="backtoadminscreen()">backtoAdminHome</button>
 
-
-
-
-
-
+	<script>
+		function backtoadminscreen() {
+			location.replace("http://localhost:8080/adminhome")
+		}
+	</script>
 
 </body>
 </html>
