@@ -5,7 +5,4 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ExcerciseRepository extends JpaRepository<Exercise, Integer> {
 
-	// INSERT INTO `alphadb`.`exercise` (`exercise`, `exercisedesc`) VALUES ('yyii',
-	// 'hiho');
-
 }

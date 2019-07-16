@@ -52,6 +52,9 @@ public class AppController {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private FeedbackRepository feedbackRepository;
 
 	@RequestMapping("/test")
 	@GetMapping("/test")
@@ -543,6 +546,32 @@ public class AppController {
 		return excerciseRepository.findAll();
 	}
 
+	
+	@GetMapping(path = "/getfeedback") 
+	public String getfeedback() {
+		return "userfeedback";
+	}
+	
+	
+	
+	@PostMapping(path = "/addfeedback") 
+	public String addfeedback(String userid, String feedbac, String datetime, String score) {
+		//ModelAndView mv = new ModelAndView();
+		
+		System.out.println(feedbac);
+		
+		
+		Feedback f = new Feedback(userid, datetime, feedbac, score);
+		
+
+		
+		 feedbackRepository.save(f);
+		//mv.setViewName("feedbacksavedsuccessgully");
+		//return mv;
+		return "feedbacksavedsuccessgully";
+	}
+	
+	
 	/*
 	 * @GetMapping("/user")
 	 * 
