@@ -14,7 +14,7 @@
 <button/> EDIT DETAILS <button/>
 <button onclick="addExcercise()">Add Exercises</button>
 
-<button action = "storeJsoninDatbase">Completed Class</button>
+<!-- <button action = "storeJsoninDatbase">Completed Class</button>  -->
 <%-- <button action = "generateJson">CheckIn Complete</button> --%>
 <%-- This is JSP comment --%>
 
@@ -38,8 +38,7 @@ Search user Details<br>
 <br>
 
 
-<button> EDIT/DELETE <button/>
-<button> VIEW HISTORY <button/>
+
 <button> ANALYZ SOCIAL MEDIA DATA <button/>
 <button> CHECK IN <button/>
 <button> GATHER FEEDBACK <button/>
