@@ -1,6 +1,7 @@
 package com.cs401.alpha.crossAI;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.json.simple.JSONArray;
@@ -52,9 +56,42 @@ public class AppController {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private FeedbackRepository feedbackRepository;
+
+	@RequestMapping(value = "/GetUserAvailibility")
+	public void GetUserAvailibility(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String uid = request.getParameter("userId").trim();
+		System.out.println("inside GetUserAvailibility");
+		System.out.println(uid);
+
+		Optional<User> ou = userRepository.findById(uid);
+		// ou.isPresent();
+		// System.out.println("he");
+		System.out.println(ou.isPresent());
+		// System.out.println("ha");
+		String GetUserAvailibility = null;
+
+		if (uid.isEmpty()) {
+			GetUserAvailibility = "please enter userid";
+		}
+
+		else if (ou.isPresent()) {
+
+			GetUserAvailibility = "user not available";
+		} else {
+			GetUserAvailibility = "user available";
+		}
+
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
+		out.print(GetUserAvailibility);
+		out.flush();
+
+	}
 
 	@RequestMapping("/test")
 	@GetMapping("/test")
@@ -504,10 +541,10 @@ public class AppController {
 		return userRepository.findById(uid);
 	}
 
-	@GetMapping(path = "/oneuser")
-	public @ResponseBody Optional<User> getOneUser() {
-		return userRepository.findById("user1");
-	}
+	/*
+	 * @GetMapping(path = "/oneuser") public @ResponseBody Optional<User>
+	 * getOneUser() { return userRepository.findById("user1"); }
+	 */
 
 	@RequestMapping("/getUserDetails")
 	public ModelAndView getUserDetails(@RequestParam String uid) throws SQLException {
@@ -530,13 +567,13 @@ public class AppController {
 		mv.addObject("height", us.get().getHeight());
 
 		// mv.addObject(user);
-		
+
 		UserHistoRel uhr = new UserHistoRel();
 		List<Histo> hist = uhr.query4mRel4Userid(uid);
 		System.out.println(hist);
-		
+
 		mv.addObject("history", hist);
-		
+
 		mv.setViewName("showUserDetails");
 		return mv;
 	}
@@ -546,31 +583,21 @@ public class AppController {
 		return excerciseRepository.findAll();
 	}
 
-	
-	@GetMapping(path = "/getfeedback") 
+	@GetMapping(path = "/getfeedback")
 	public String getfeedback() {
 		return "userfeedback";
 	}
-	
-	
-	@PostMapping(path = "/addfeedback") 
-	public String addfeedback(String userid, String feedbac, String datetime, String score) {
-		//ModelAndView mv = new ModelAndView();
-		
-		System.out.println(feedbac);
-		
-		
-		Feedback f = new Feedback(userid, datetime, feedbac, score);
-		
 
-		
-		 feedbackRepository.save(f);
-		//mv.setViewName("feedbacksavedsuccessgully");
-		//return mv;
+	@PostMapping(path = "/addfeedback")
+	public String addfeedback(String userid, String feedbac, String datetime, String score) {
+
+		System.out.println(feedbac);
+
+		Feedback f = new Feedback(userid, datetime, feedbac, score);
+		feedbackRepository.save(f);
 		return "feedbacksavedsuccessgully";
 	}
-	
-	
+
 	/*
 	 * @GetMapping("/user")
 	 * 

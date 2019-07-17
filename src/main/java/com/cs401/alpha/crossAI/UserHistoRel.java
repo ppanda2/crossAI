@@ -100,10 +100,10 @@ public class UserHistoRel {
 	}
 
 	public List<Histo> query4mRel4Userid(String uid) throws SQLException {
-		// TODO return all dates/exercises from histo table based on histid
+	
 
 		
-		System.out.println("CheckUser");
+		System.out.println("query4mRel4Userid inside UserHistoRel.java");
 
 		String myDriver = "org.gjt.mm.mysql.Driver";
 		String myUrl = "jdbc:mysql://localhost:3306/alphadb";
@@ -139,12 +139,16 @@ public class UserHistoRel {
 		
 		List<Histo> histdetails = new ArrayList<>();
 		
-		rs.next(); 
+		//rs.next(); 
+		//System.out.println("fetch size");
+		//System.out.println(rs.getFetchSize());
 		
 		while(rs.next())
 		{
+		//System.out.println("inside rs next ");
 		System.out.println(rs.getString(2));
 		histdetails.add(new Histo(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
+		
 		}
 		
 		//System.out.println(rs);

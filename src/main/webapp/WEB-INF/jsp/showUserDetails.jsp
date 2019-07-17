@@ -47,7 +47,9 @@
 		</fieldset>
 	</form>
 
-History
+
+	<h1 align="center">History</h1>
+
 	<table border="1" cellpadding="10">
 		<tr>
 			<th>date</th>

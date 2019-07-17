@@ -8,6 +8,7 @@
 </head>
 <body>
 
+<h2>Add Exercise </h2>
 <form action="addexercise">
 	
 	<label>Excercise Name</label> <input type ="text" name ="exercise"><br>

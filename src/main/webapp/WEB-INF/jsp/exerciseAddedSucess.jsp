@@ -8,6 +8,7 @@
 </head>
 <body>
  Exercise added successfully with exercise id = ${uid} 
+ <br>
  
  <button onclick="backtoadminscreen()">backtoLogin</button>
 
