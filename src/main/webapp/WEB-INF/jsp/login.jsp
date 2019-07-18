@@ -31,15 +31,8 @@ else
 }
 </script>
 
-
-
- 
-
-    <!-- include the Tools -->
   <script src="http://cdn.jquerytools.org/1.2.6/full/jquery.tools.min.js"></script>
   
-  <!-- standalone page styling (can be removed) -->
-
   <link rel="stylesheet" type="text/css"
         href="/media/css/standalone.css"/>
 
