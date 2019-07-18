@@ -115,7 +115,6 @@ else
 	
 	
 	<script>
-  // execute your scripts when the DOM is ready. this is a good habit
   $(function() {
 
         // select all desired input fields and attach tooltips to them
