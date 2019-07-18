@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>first page</title>
+<title>first page which is login</title>
 
 <script>
 function check()
