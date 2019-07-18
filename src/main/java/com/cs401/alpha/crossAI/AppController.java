@@ -607,21 +607,6 @@ public class AppController {
 		return "showfeedback";
 	}
 
-	/*
-	 * @GetMapping("/user")
-	 * 
-	 * @Bean public void index(UserRepository urep) {
-	 * System.out.println("inside /user target"); // return
-	 * userRespository.findAllByUserID("user1"); urep.findByuserId("user1"); }
-	 */
 
-	/*
-	 * @GetMapping("/user/{id}") public User show(@PathVariable String id) { // int
-	 * blogId = Integer.parseInt(id); String userid = id; // return
-	 * userRespository.findOne(userid); return userRespository.findByuserId(userid);
-	 * // .findOne(userid);
-	 * 
-	 * }
-	 */
 
 }
