@@ -597,6 +597,15 @@ public class AppController {
 		feedbackRepository.save(f);
 		return "feedbacksavedsuccessgully";
 	}
+	
+	
+	@GetMapping(path = "/analyzefeedback")
+	public String analyzefeedback() {
+		
+		
+		
+		return "showfeedback";
+	}
 
 	/*
 	 * @GetMapping("/user")

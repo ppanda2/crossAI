@@ -5,16 +5,93 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>first page</title>
+
+<script>
+function check()
+{
+ if( document.myForm.userId.value == "" )
+ {
+   alert("Please fill out userid field");
+   return false;
+ }
+ else if ( document.myForm.password.value == "" )
+ {
+	 alert("Please fill out password field");
+	   return false;
+ }
+ else if (document.myForm.userId.value.length < 3 || document.myForm.userId.value.length > 10)
+{
+        	alert('userid can be between 3 and 10 characters'); 
+        	return false;
+}
+else
+ {
+   return true;
+ }
+}
+</script>
+
+
+
+ 
+
+    <!-- include the Tools -->
+  <script src="http://cdn.jquerytools.org/1.2.6/full/jquery.tools.min.js"></script>
+  
+  <!-- standalone page styling (can be removed) -->
+
+  <link rel="stylesheet" type="text/css"
+        href="/media/css/standalone.css"/>
+
+  <link rel="stylesheet" type="text/css"
+      href="/media/css/tooltip-generic.css"/>
+<style>
+  #myForm {
+  border:1px outset #ccc;
+  background:#fff url(/media/img/gradient/h600.png) repeat-x;
+  padding:20px;
+  margin:20px auto;
+  width:350px;
+  font-size:12px;
+  -moz-border-radius:4px;
+  }
+
+  #myform h3 {
+  text-align:center;
+  margin:0 0 10px 0;
+  }
+
+  /* http://www.quirksmode.org/css/forms.html */
+  #inputs label, #inputs input, #inputs textarea, #inputs select {
+  display: block;
+  width: 150px;
+  float: left;
+  margin-bottom: 20px;
+  }
+
+  #inputs label {
+  text-align: right;
+  width: 75px;
+  padding-right: 20px;
+  }
+
+  #inputs br {
+  clear: left;
+  }
+</style>
+
+
+
 </head>
 <body>
 	<h1>CrossAi</h1>
-	<form action = "checklogin" method="POST">
+	<form action = "checklogin" method="POST"  name="myForm" onSubmit="return check()">
 		<fieldset>
 			<p>
-				<label>User Name</label> <input type="text" name="userId">
+				<label>User Name</label> <input type="text" name="userId" title="Must be between 3 and 10 characters">
 			</p>
 			<p>
-				<label>Password</label> <input type="text" name="password">
+				<label>Password</label> <input type="text" name="password" title="Make it hard to guess.">
 			</p>
 			<input type="submit"  value = "submit"/>
 		</fieldset>
@@ -42,6 +119,30 @@
 			
 		}
 	</script>
+	
+	
+	<script>
+  // execute your scripts when the DOM is ready. this is a good habit
+  $(function() {
+
+        // select all desired input fields and attach tooltips to them
+      $("#myForm :input").tooltip({
+
+      // place tooltip on the right edge
+      position: "center right",
+
+      // a little tweaking of the position
+      offset: [-2, 10],
+
+      // use the built-in fadeIn/fadeOut effect
+      effect: "fade",
+
+      // custom opacity setting
+      opacity: 0.7
+
+      });
+    });
+</script>
 
 </body>
 </html>

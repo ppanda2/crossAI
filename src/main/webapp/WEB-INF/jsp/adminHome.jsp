@@ -74,8 +74,12 @@
 		<button>
 			ANALYZ SOCIAL MEDIA DATA
 			<button />
-			<button>
-				ANALYZE FEEDBACK
-				<button />
+	
+			<form action="analyzefeedback">
+		<input type="submit" value = "ANALYZE FEEDBACK"><br>
+	</form>
+	<br>
+				
+				
 </body>
 </html>
