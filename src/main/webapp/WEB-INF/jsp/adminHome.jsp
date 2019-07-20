@@ -35,9 +35,17 @@
 
 	</form>
 	<br>
-	<br>
 
+	
+	<br> Edit user Details:
+	<form action="edituserdetails">
+		<label>enter UserId to be edited: </label> <input type="text" name=userd>
+		<input type="submit" value = "Find"><br>
 
+	</form>
+	
+
+<br>
 
 	<form action="getfeedback">
 		<input type="submit" value = "Gather Feedback"><br>
@@ -68,9 +76,8 @@
 	</script>
 
 
-	<button>
-		EDIT DETAILS
-		<button />
+	
+				
 		<button>
 			ANALYZ SOCIAL MEDIA DATA
 			<button />
@@ -79,7 +86,7 @@
 			<button />
 			
 	
-			<form action="analyzefeedback">
+	<form action="analyzefeedback">
 		<input type="submit" value = "ANALYZE FEEDBACK"><br>
 	</form>
 	<br>

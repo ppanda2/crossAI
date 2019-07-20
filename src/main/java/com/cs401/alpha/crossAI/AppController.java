@@ -128,8 +128,6 @@ public class AppController {
 		}
 
 		System.out.println("usertype=" + usertype);
-		// boolean userisadmin = false;
-
 		String InvalidUserOrPassword = null;
 		if (usertype.equalsIgnoreCase("yesAdmin")) {
 			mv.setViewName("adminHome");
@@ -252,8 +250,6 @@ public class AppController {
 			e.printStackTrace();
 		}
 
-		// return rs.getString("firstName");
-
 		model.addAttribute("allusers", allsuers);
 
 		return "startCheckIn";
@@ -287,12 +283,9 @@ public class AppController {
 			e.printStackTrace();
 		}
 
-		String dbStoredStatus = storeJsoninDatbase(joo, userIds, jsonString); // the json that is created needs to
-																				// loaded in
-		// database. this
-		// call is for that purpose
-		// System.out.println(jsonString);
-
+		//the json that is created needs to loaded in database. this call is for that purpose
+		String dbStoredStatus = storeJsoninDatbase(joo, userIds, jsonString); 
+	
 		model.addAttribute("jsonexer", jsonString);
 		return "stopCheckIn";
 
@@ -494,10 +487,6 @@ public class AppController {
 
 		ModelAndView mv = new ModelAndView();
 
-		if (user.getAge() < 13) {
-			System.out.println("user too young");
-		}
-
 		User u = userRepository.save(user);
 
 		String createdUid = u.getUserId();
@@ -520,7 +509,43 @@ public class AppController {
 		mv.setViewName("userAddedSucess");
 		return mv;
 	}
+	
+	
+	
+	@PostMapping(path = "/saveEditedUser") // is called from edit user
+	public @ResponseBody ModelAndView saveEditedUser(@Valid @ModelAttribute User user, String userid) {
 
+		ModelAndView mv = new ModelAndView();
+		System.out.println("inside edit and save");
+		
+		user.setUserId(userid);
+		System.out.println(user.getBmi());
+		
+		
+		User u = userRepository.save(user);
+
+		String createdUid = u.getUserId();
+		System.out.println(createdUid);
+
+		Optional<User> us = getUserAfterCreate(createdUid);
+		System.out.println(us);
+		System.out.println(us.get().getFirstName());
+
+		mv.addObject("userid", us.get().getUserId());
+		mv.addObject("upassword", us.get().getPassword());
+		mv.addObject("firstName", us.get().getFirstName());
+		mv.addObject("lastName", us.get().getLastName());
+		mv.addObject("email", us.get().getEmail());
+		mv.addObject("phone", us.get().getPhone());
+		mv.addObject("gender", us.get().getGender());
+		mv.addObject("age", us.get().getAge());
+		mv.addObject("height", us.get().getHeight());
+
+		mv.setViewName("userEditedSucess");
+		return mv;
+	}
+	
+	
 	@GetMapping(path = "/adminhome")
 	public String adminhome(String uid) {
 		System.out.println("inside admin home");
@@ -564,8 +589,45 @@ public class AppController {
 		System.out.println(hist);
 
 		mv.addObject("history", hist);
-
 		mv.setViewName("showUserDetails");
+		return mv;
+	}
+	
+	
+	@GetMapping(path = "/edituserdetails")
+	public ModelAndView edituserdetails(@RequestParam String userd) throws SQLException {
+		ModelAndView mv = new ModelAndView();
+
+		System.out.println(userd);
+		Optional<User> u = userRepository.findById(userd);
+		
+		if (!u.isPresent())
+		{
+			mv.setViewName("EditUserDetailsUserNotPresent");
+			return mv;
+		}
+		
+		System.out.println(u.toString());
+
+		mv.addObject("userid", u.get().getUserId());
+		mv.addObject("password", u.get().getPassword());
+		mv.addObject("firstName", u.get().getFirstName());
+		mv.addObject("lastName", u.get().getLastName());
+		mv.addObject("email", u.get().getEmail());
+		mv.addObject("phone", u.get().getPhone());
+		mv.addObject("gender", u.get().getGender());
+		mv.addObject("age", u.get().getAge());
+		mv.addObject("height", u.get().getHeight());
+		
+		mv.addObject("fat", u.get().getFat());
+		mv.addObject("bmi", u.get().getBmi());
+		mv.addObject("fitScore", u.get().getFitscore());
+		mv.addObject("goal", u.get().getGoal());
+		mv.addObject("weight", u.get().getWeight());
+		mv.addObject("status", u.get().getStatus());
+		
+		
+		mv.setViewName("EditUserDetails");
 		return mv;
 	}
 

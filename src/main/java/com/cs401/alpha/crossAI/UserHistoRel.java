@@ -100,9 +100,7 @@ public class UserHistoRel {
 	}
 
 	public List<Histo> query4mRel4Userid(String uid) throws SQLException {
-	
 
-		
 		System.out.println("query4mRel4Userid inside UserHistoRel.java");
 
 		String myDriver = "org.gjt.mm.mysql.Driver";
@@ -119,7 +117,6 @@ public class UserHistoRel {
 		String query = "SELECT alphadb.histo.* FROM alphadb.user_hist_rel, alphadb.histo  where alphadb.user_hist_rel.userid ="
 				+ "\"" + uid + "\"" + "and alphadb.user_hist_rel.histid  = alphadb.histo.histID";
 
-		
 		System.out.println(query); // create the java statement
 		Statement st = null;
 		try {
@@ -136,23 +133,14 @@ public class UserHistoRel {
 			e.printStackTrace();
 		}
 
-		
 		List<Histo> histdetails = new ArrayList<>();
-		
-		//rs.next(); 
-		//System.out.println("fetch size");
-		//System.out.println(rs.getFetchSize());
-		
-		while(rs.next())
-		{
-		//System.out.println("inside rs next ");
-		System.out.println(rs.getString(2));
-		histdetails.add(new Histo(rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5)));
-		
+
+		while (rs.next()) {
+			System.out.println(rs.getString(2));
+			histdetails.add(new Histo(rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+
 		}
-		
-		//System.out.println(rs);
-		
+
 		return histdetails;
 
 	}

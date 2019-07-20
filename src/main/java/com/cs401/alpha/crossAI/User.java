@@ -27,16 +27,19 @@ public class User {
 	private String password;
 	private String firstName;
 	private String lastName;
-	private Integer age;
+	
+
+	private String age;
 	private String gender;
 	private String email;
 	private String phone;
-	private Integer weight;
-	private Long fat;
-	private Integer height;
-	private Long bmi;
-	private Long fitscore;
-	private Integer goal;
+	private String weight;
+	private String fat;
+	private String height;
+	
+	private String bmi;
+	private String fitscore;
+	private String goal;
 	private String status;
 
 	@ManyToMany(mappedBy = "participates")
@@ -52,8 +55,8 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public User(String userId, String password, String firstName, String lastName, Integer age, String gender,
-			String email, String phone, Integer weight, Long fat, Integer height, Long bmi, Long fitscore, Integer goal,
+	public User(String userId, String password, String firstName, String lastName, String age, String gender,
+			String email, String phone, String weight, String fat, String height, String bmi, String fitscore, String goal,
 			String status) {
 		super();
 		this.userId = userId;
@@ -97,11 +100,11 @@ public class User {
 		this.lastName = lastName;
 	}
 
-	public Integer getAge() {
+	public String getAge() {
 		return age;
 	}
 
-	public void setAge(Integer age) {
+	public void setAge(String age) {
 		this.age = age;
 	}
 
@@ -129,51 +132,51 @@ public class User {
 		this.phone = phone;
 	}
 
-	public Integer getWeight() {
+	public String getWeight() {
 		return weight;
 	}
 
-	public void setWeight(Integer weight) {
+	public void setWeight(String weight) {
 		this.weight = weight;
 	}
 
-	public Long getFat() {
+	public String getFat() {
 		return fat;
 	}
 
-	public void setFat(Long fat) {
+	public void setFat(String fat) {
 		this.fat = fat;
 	}
 
-	public Integer getHeight() {
+	public String getHeight() {
 		return height;
 	}
 
-	public void setHeight(Integer height) {
+	public void setHeight(String height) {
 		this.height = height;
 	}
 
-	public Long getBmi() {
+	public String getBmi() {
 		return bmi;
 	}
 
-	public void setBmi(Long bmi) {
+	public void setBmi(String bmi) {
 		this.bmi = bmi;
 	}
 
-	public Long getFitscore() {
+	public String getFitscore() {
 		return fitscore;
 	}
 
-	public void setFitscore(Long fitscore) {
+	public void setFitscore(String fitscore) {
 		this.fitscore = fitscore;
 	}
 
-	public Integer getGoal() {
+	public String getGoal() {
 		return goal;
 	}
 
-	public void setGoal(Integer goal) {
+	public void setGoal(String goal) {
 		this.goal = goal;
 	}
 
