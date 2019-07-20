@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -587,11 +588,73 @@ public class AppController {
 	public String getfeedback() {
 		return "userfeedback";
 	}
+	
+	
+	
+	/**
+	 * @author ppanda
+	 * check here if the user id entered is present in database. If not then register the feedback with userid as  Anonymous
+	 * if feedback is empty then store feedback as default entry "Feedback was empty, or no feedback was provided"
+	 * 
+	 */
 
 	@PostMapping(path = "/addfeedback")
 	public String addfeedback(String userid, String feedbac, String datetime, String score) {
 
 		System.out.println(feedbac);
+		
+		if (userid.equalsIgnoreCase(null) || userid.isEmpty())
+		{
+			userid = "Anonymous";
+		}
+				
+		Optional<User> ou = userRepository.findById(userid);
+		System.out.println(ou.isPresent());
+		
+		// check here if the user id entered is present in database. If not then register the feedback with userid as  Anonymous
+
+		if (!ou.isPresent()) {
+			userid = "Anonymous";
+		} 
+		
+		
+		
+		if (feedbac.equalsIgnoreCase(null) || feedbac.isEmpty())
+		{
+			feedbac  = "Feedback was empty, or no feedback was provided";
+		}
+		
+		if (datetime.equalsIgnoreCase(null) || datetime.isEmpty())
+		{
+			Date date = new Date();
+			datetime = date.toString();
+		}
+		
+		try 
+		{
+		if (score.equalsIgnoreCase(null) || score.isEmpty() )
+		{
+			score = "0";
+		}
+		
+		if (  Integer.parseInt(score) <0)
+		{
+			score = "0";
+		}
+		
+		if (  Integer.parseInt(score) >=10)
+		{
+			score = "10";
+		}
+		}
+		catch(java.lang.NumberFormatException e)
+		{
+			System.out.println("There is a number format exception for score hence storing 0");
+			score = "0";
+		}
+		
+		
+		
 
 		Feedback f = new Feedback(userid, datetime, feedbac, score);
 		feedbackRepository.save(f);
@@ -608,5 +671,12 @@ public class AppController {
 	}
 
 
+	/*
+	
+	@RequestMapping(path = "/error")
+	public String error() {
+		return "error";
+	}
+	*/
 
 }

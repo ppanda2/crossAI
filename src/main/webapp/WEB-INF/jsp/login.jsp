@@ -39,6 +39,13 @@ else
   <link rel="stylesheet" type="text/css"
       href="/media/css/tooltip-generic.css"/>
 <style>
+
+label {
+    display: inline-block;
+    width:100px;
+    text-align: right;
+}
+
   #myForm {
   border:1px outset #ccc;
   background:#fff url(/media/img/gradient/h600.png) repeat-x;
@@ -71,13 +78,34 @@ else
   #inputs br {
   clear: left;
   }
+  
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: left;
+}
+
+input[type=reset] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
 </style>
 
 
 
 </head>
 <body>
-	<h1>CrossAi</h1>
+	<h1 align = "center">CrossAi</h1>
 	<form action = "checklogin" method="POST"  name="myForm" onSubmit="return check()">
 		<fieldset>
 			<p>
@@ -86,7 +114,7 @@ else
 			<p>
 				<label>Password</label> <input type="text" name="password" title="Make it hard to guess.">
 			</p>
-			<input type="submit"  value = "submit"/>
+			<input type="submit" value="Submit"> <input type="reset" value="Reset" />
 		</fieldset>
 	</form>
 	
