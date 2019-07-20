@@ -69,10 +69,8 @@ public class AppController {
 		System.out.println(uid);
 
 		Optional<User> ou = userRepository.findById(uid);
-		// ou.isPresent();
-		// System.out.println("he");
+	
 		System.out.println(ou.isPresent());
-		// System.out.println("ha");
 		String GetUserAvailibility = null;
 
 		if (uid.isEmpty()) {
@@ -485,6 +483,7 @@ public class AppController {
 		return "registration";
 	}
 
+	
 	/**
 	 * This end point is called from registration
 	 * 
@@ -507,8 +506,6 @@ public class AppController {
 		Optional<User> us = getUserAfterCreate(createdUid);
 		System.out.println(us);
 		System.out.println(us.get().getFirstName());
-
-		// return new ResponseEntity<>(us, HttpStatus.CREATED);
 
 		mv.addObject("userid", us.get().getUserId());
 		mv.addObject("upassword", us.get().getPassword());
@@ -542,11 +539,6 @@ public class AppController {
 		return userRepository.findById(uid);
 	}
 
-	/*
-	 * @GetMapping(path = "/oneuser") public @ResponseBody Optional<User>
-	 * getOneUser() { return userRepository.findById("user1"); }
-	 */
-
 	@RequestMapping("/getUserDetails")
 	public ModelAndView getUserDetails(@RequestParam String uid) throws SQLException {
 		ModelAndView mv = new ModelAndView();
@@ -567,8 +559,6 @@ public class AppController {
 		mv.addObject("age", us.get().getAge());
 		mv.addObject("height", us.get().getHeight());
 
-		// mv.addObject(user);
-
 		UserHistoRel uhr = new UserHistoRel();
 		List<Histo> hist = uhr.query4mRel4Userid(uid);
 		System.out.println(hist);
@@ -588,13 +578,19 @@ public class AppController {
 	public String getfeedback() {
 		return "userfeedback";
 	}
-	
-	
-	
+
 	/**
-	 * @author ppanda
-	 * check here if the user id entered is present in database. If not then register the feedback with userid as  Anonymous
-	 * if feedback is empty then store feedback as default entry "Feedback was empty, or no feedback was provided"
+	 * check here if the user id entered is present in database. If not then
+	 * register the feedback with userid as Anonymous if feedback is empty then
+	 * store feedback as default entry "Feedback was empty, or no feedback was
+	 * provided"
+	 * 
+	 * @author ppanda 
+	 * @param String userid
+	 * @param String feedback
+	 * @param String datetime 
+	 * @param String score
+	 * @return String i.e. name of jsp file
 	 * 
 	 */
 
@@ -602,81 +598,52 @@ public class AppController {
 	public String addfeedback(String userid, String feedbac, String datetime, String score) {
 
 		System.out.println(feedbac);
-		
-		if (userid.equalsIgnoreCase(null) || userid.isEmpty())
-		{
+
+		if (userid.equalsIgnoreCase(null) || userid.isEmpty()) {
 			userid = "Anonymous";
 		}
-				
+
 		Optional<User> ou = userRepository.findById(userid);
-		System.out.println(ou.isPresent());
-		
-		// check here if the user id entered is present in database. If not then register the feedback with userid as  Anonymous
 
 		if (!ou.isPresent()) {
 			userid = "Anonymous";
-		} 
-		
-		
-		
-		if (feedbac.equalsIgnoreCase(null) || feedbac.isEmpty())
-		{
-			feedbac  = "Feedback was empty, or no feedback was provided";
 		}
-		
-		if (datetime.equalsIgnoreCase(null) || datetime.isEmpty())
-		{
+
+		if (feedbac.equalsIgnoreCase(null) || feedbac.isEmpty()) {
+			feedbac = "Feedback was empty, or no feedback was provided";
+		}
+
+		if (datetime.equalsIgnoreCase(null) || datetime.isEmpty()) {
 			Date date = new Date();
 			datetime = date.toString();
 		}
-		
-		try 
-		{
-		if (score.equalsIgnoreCase(null) || score.isEmpty() )
-		{
-			score = "0";
-		}
-		
-		if (  Integer.parseInt(score) <0)
-		{
-			score = "0";
-		}
-		
-		if (  Integer.parseInt(score) >=10)
-		{
-			score = "10";
-		}
-		}
-		catch(java.lang.NumberFormatException e)
-		{
+
+		try {
+			if (score.equalsIgnoreCase(null) || score.isEmpty()) {
+				score = "0";
+			}
+
+			if (Integer.parseInt(score) < 0) {
+				score = "0";
+			}
+
+			if (Integer.parseInt(score) >= 10) {
+				score = "10";
+			}
+		} catch (java.lang.NumberFormatException e) {
 			System.out.println("There is a number format exception for score hence storing 0");
 			score = "0";
 		}
-		
-		
-		
 
 		Feedback f = new Feedback(userid, datetime, feedbac, score);
 		feedbackRepository.save(f);
 		return "feedbacksavedsuccessgully";
 	}
-	
-	
+
 	@GetMapping(path = "/analyzefeedback")
 	public String analyzefeedback() {
-		
-		
-		
+
 		return "showfeedback";
 	}
-
-
-	/*
-	
-	@RequestMapping(path = "/error")
-	public String error() {
-		return "error";
-	}
-	*/
 
 }

@@ -6,6 +6,61 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>The form should list all user ids to be selected.</title>
+
+<script>
+function check()
+{
+ if ( document.myForm.date.value == "" )
+ {
+	 alert("Please fill a date ");
+	   return false;
+ }
+ else if ( document.myForm.time.value == "" )
+{
+        	alert('please fill out a time'); 
+        	return false;
+}
+ else if ( document.myForm.nameofclass.value == "" )
+ {
+         	alert('please fill out namof of the class'); 
+         	return false;
+ }
+else
+ {
+   return true;
+ }
+}
+</script>
+
+<style>
+label {
+    display: inline-block;
+    width:230px;
+    text-align: right;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: left;
+}
+
+input[type=reset] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+</style>
+
+
 </head>
 <body>
 
@@ -19,24 +74,27 @@
  -->
 
 	<!-- This is check boxes -->
-	<form action="stopCheckIn" method="POST">
-
-		Choose Users : <br>
+	<form action="stopCheckIn" method="POST" name="myForm" onSubmit="return check()">
+<fieldset>
+		<h3>Choose Users :</h3>
 		<c:forEach var="Users" items="${allusers}">
 			<input type="checkbox" value="${Users}" name="userIds">
 			<c:out value="${Users}" />
 			<br>
 		</c:forEach>
 
-	<label>Enter date in Month, Date, Year</label>  <input type="text" name=date><br>
-	<label>Enter time in 24 hours format</label>  <input type="text" name=time><br>
-	<label>Enter name of class</label>  <input type="text" name=nameofclass><br>
+<p>	<label>Enter date in Month, Date, Year</label>  <input type="text" name=date></p>
+<p>	<label>Enter time in 24 hours format</label>  <input type="text" name=time></p>
+<p>	<label>Enter name of class</label>  <input type="text" name=nameofclass></p>
 	
-	
-	
-	
-		<input type="submit" value="Submit">
+		<input type="submit" value="Submit"><input type="reset" value="Reset" />
+		</fieldset>
 	</form>
-
+ <button onclick="backtoadminscreen()" >backtoAdminHome</button> 
+	<script>
+		function backtoadminscreen() {
+			location.replace("http://localhost:8080/adminhome")
+		}
+	</script>
 </body>
 </html>
