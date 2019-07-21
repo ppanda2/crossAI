@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<h1>uh -oh!!! something was wrong!!</h1>
+<h1 color= orange>uh -oh!!! something was wrong!!</h1>
 
 
 		<button onclick="backLoginFunc()">backtoLogin</button>

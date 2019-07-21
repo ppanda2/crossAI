@@ -7,18 +7,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form>
+
+Role changed successfully 
 
 
-<h3>Feedback saved successfully.</h3>
-</form>
-
- <button onclick="backtoadminscreen()">backtoAdminHome</button>
+<button onclick="backtoadminscreen()">backtoadmin</button>
 
 	<script>
 		function backtoadminscreen() {
 			location.replace("http://localhost:8080/adminhome")
 		}
-	</script>
+	</script> 
 </body>
 </html>

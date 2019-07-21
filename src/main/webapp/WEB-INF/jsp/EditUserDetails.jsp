@@ -80,14 +80,29 @@
 	<input type="radio" name="status" value="Active">Active<br>
   	<input type="radio" name="status" value="InActive">InActive<br>
   	</p>
-
-	
 		<p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 	
-			
 		</fieldset>
 	</form>
-
+	
+		<form action="saveRoleUser"  method ="post" name="roleForm">
+		<fieldset>
+		
+			<p>
+				<label>userId:</label> <input type="text" name="userRoleid" id ="userRoleId"
+					value="${userIdRoleRel}"  />
+			</p>
+		<p>
+				<label>Current Role : ${currRole} </label> <br>
+		<input type="radio" name="status" value="Admin">Admin<br>
+  		<input type="radio" name="status" value="NonAdmin">NonAdmin<br>
+  		</p>
+		
+		<p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+	
+		
+	</fieldset>
+	</form>
 
 
 

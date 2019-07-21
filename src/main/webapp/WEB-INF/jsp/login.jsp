@@ -112,31 +112,40 @@ input[type=reset] {
 				<label>User Name</label> <input type="text" name="userId" title="Must be between 3 and 10 characters">
 			</p>
 			<p>
-				<label>Password</label> <input type="text" name="password" title="Make it hard to guess.">
+				<label>Password</label> <input type="password" name="password" title="Make it hard to guess.">
 			</p>
 			<input type="submit" value="Submit"> <input type="reset" value="Reset" />
 		</fieldset>
 	</form>
 	
 	${InvalidUserOrPassword}
+	
+	<br>
+	<br>
 
-	<h2>Redirect to AboutUS</h2>
+	
+
+	
+	<button onclick="callRegistartion()">Registration</button>
+	<script>
+		function callRegistartion() {
+			location.replace("http://localhost:8080/registration")
+			
+		}
+	</script>
 	
 	<button onclick="myFunction()">About Us</button>
-
 	<script>
 		function myFunction() {
 			location.replace("http://localhost:8080/Aboutus")
 			
 		}
 	</script>
-
-	<h2>Redirect to a Registration</h2>
-	<button onclick="callRegistartion()">Registration</button>
-
+	
+	<button onclick="callHelp()">Help!</button>
 	<script>
-		function callRegistartion() {
-			location.replace("http://localhost:8080/registration")
+		function callHelp() {
+			location.replace("http://localhost:8080/help")
 			
 		}
 	</script>

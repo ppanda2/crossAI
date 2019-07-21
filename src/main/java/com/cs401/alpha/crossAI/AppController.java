@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -69,7 +70,7 @@ public class AppController {
 		System.out.println(uid);
 
 		Optional<User> ou = userRepository.findById(uid);
-	
+
 		System.out.println(ou.isPresent());
 		String GetUserAvailibility = null;
 
@@ -283,9 +284,10 @@ public class AppController {
 			e.printStackTrace();
 		}
 
-		//the json that is created needs to loaded in database. this call is for that purpose
-		String dbStoredStatus = storeJsoninDatbase(joo, userIds, jsonString); 
-	
+		// the json that is created needs to loaded in database. this call is for that
+		// purpose
+		String dbStoredStatus = storeJsoninDatbase(joo, userIds, jsonString);
+
 		model.addAttribute("jsonexer", jsonString);
 		return "stopCheckIn";
 
@@ -476,7 +478,6 @@ public class AppController {
 		return "registration";
 	}
 
-	
 	/**
 	 * This end point is called from registration
 	 * 
@@ -509,19 +510,63 @@ public class AppController {
 		mv.setViewName("userAddedSucess");
 		return mv;
 	}
-	
-	
-	
+
+	@PostMapping(path = "/saveRoleUser")
+	public ModelAndView saveRoleUser(String userRoleid, String status) {
+		ModelAndView mv = new ModelAndView();
+		System.out.println("userRoleid : " + userRoleid);
+		System.out.println("status : " + status);
+
+		String temprole = null;
+		if (status.equalsIgnoreCase("Admin")) {
+			temprole = "1";
+		} else {
+			temprole = "2";
+		}
+
+		String myDriver = "org.gjt.mm.mysql.Driver";
+		String myUrl = "jdbc:mysql://localhost:3306/alphadb";
+
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(myUrl, "root", "root");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String userrolerelquery = "update alphadb.user_role_rel set roleId =" + temprole + " where userId =" + "\""
+				+ userRoleid + "\"";
+
+		System.out.println(userrolerelquery);
+		Statement st = null;
+
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			st.execute(userrolerelquery);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		mv.setViewName("RoleChangedSuccessfully");
+		return mv;
+
+	}
+
 	@PostMapping(path = "/saveEditedUser") // is called from edit user
 	public @ResponseBody ModelAndView saveEditedUser(@Valid @ModelAttribute User user, String userid) {
 
 		ModelAndView mv = new ModelAndView();
 		System.out.println("inside edit and save");
-		
+
 		user.setUserId(userid);
 		System.out.println(user.getBmi());
-		
-		
+
 		User u = userRepository.save(user);
 
 		String createdUid = u.getUserId();
@@ -544,8 +589,7 @@ public class AppController {
 		mv.setViewName("userEditedSucess");
 		return mv;
 	}
-	
-	
+
 	@GetMapping(path = "/adminhome")
 	public String adminhome(String uid) {
 		System.out.println("inside admin home");
@@ -592,21 +636,71 @@ public class AppController {
 		mv.setViewName("showUserDetails");
 		return mv;
 	}
-	
-	
+
 	@GetMapping(path = "/edituserdetails")
 	public ModelAndView edituserdetails(@RequestParam String userd) throws SQLException {
 		ModelAndView mv = new ModelAndView();
 
 		System.out.println(userd);
 		Optional<User> u = userRepository.findById(userd);
-		
-		if (!u.isPresent())
-		{
+
+		if (!u.isPresent()) {
 			mv.setViewName("EditUserDetailsUserNotPresent");
 			return mv;
 		}
-		
+
+		// get role of the user
+
+		String myDriver = "org.gjt.mm.mysql.Driver";
+		String myUrl = "jdbc:mysql://localhost:3306/alphadb";
+
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(myUrl, "root", "root");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String rolequery = "SELECT * FROM alphadb.user_role_rel where userId =" + "\"" + userd + "\"";
+
+		System.out.println(rolequery);
+		Statement st = null;
+
+		try {
+			st = conn.createStatement();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		ResultSet rs = null;
+
+		try {
+			rs = st.executeQuery(rolequery);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		String tempRole = null;
+		if (rs.next()) {
+			System.out.println("role is ");
+			System.out.println(rs.getString(2));
+			tempRole = rs.getString(2);
+		}
+
+		String currRole = null;
+
+		if (tempRole.equalsIgnoreCase("1")) {
+			currRole = "Admin";
+		} else {
+			currRole = "Non Admin";
+		}
+
+		mv.addObject("currRole", currRole);
+		mv.addObject("userIdRoleRel", rs.getString(1));
+
+		// end get role of user
+
 		System.out.println(u.toString());
 
 		mv.addObject("userid", u.get().getUserId());
@@ -618,15 +712,14 @@ public class AppController {
 		mv.addObject("gender", u.get().getGender());
 		mv.addObject("age", u.get().getAge());
 		mv.addObject("height", u.get().getHeight());
-		
+
 		mv.addObject("fat", u.get().getFat());
 		mv.addObject("bmi", u.get().getBmi());
 		mv.addObject("fitScore", u.get().getFitscore());
 		mv.addObject("goal", u.get().getGoal());
 		mv.addObject("weight", u.get().getWeight());
 		mv.addObject("status", u.get().getStatus());
-		
-		
+
 		mv.setViewName("EditUserDetails");
 		return mv;
 	}
@@ -647,10 +740,10 @@ public class AppController {
 	 * store feedback as default entry "Feedback was empty, or no feedback was
 	 * provided"
 	 * 
-	 * @author ppanda 
+	 * @author ppanda
 	 * @param String userid
 	 * @param String feedback
-	 * @param String datetime 
+	 * @param String datetime
 	 * @param String score
 	 * @return String i.e. name of jsp file
 	 * 
