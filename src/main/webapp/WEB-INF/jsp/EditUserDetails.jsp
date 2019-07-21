@@ -6,6 +6,33 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Edit User Details</title>
+
+<style>
+label {
+    display: inline-block;
+    width:150px;
+    text-align: right;
+}
+
+.radio {
+    display: inline-block;
+    width:150px;
+    text-align: right;
+}
+
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: left;
+}
+</style>
+
+
 </head>
 <body>
 
@@ -39,10 +66,10 @@
 					value="${phone}" />
 			</p>
 			<p>
-				<label>Gender :${gender} </label> 	<br>
-  <input type="radio" name="gender" value="male"> Male<br>
-  <input type="radio" name="gender" value="female"> Female<br>
-  <input type="radio" name="gender" value="other"> Other<br> 
+				<label>Gender</label> 	<br>
+  <label></label><input type="radio" name="gender" value="male" ${gender=='male'?'checked':''}> Male<br>
+  <label></label><input type="radio" name="gender" value="female" ${gender=='female'?'checked':''}> Female<br>
+  <label></label><input type="radio" name="gender" value="other" ${gender=='other'?'checked':''}> Other<br> 
   
 			</p>
 			<p>
@@ -66,21 +93,21 @@
 			</p>
 			
 			<p>
-				<label>Fat Percentage :</label> <input type="text" name="fat"
+				<label>Fat Percentage</label> <input type="text" name="fat"
 					value="${fat}" />
 			</p>
 			<p>
-			<label>Goal :${goal}</label> <br>
-	<input type="radio" name="goal" value=1>(1)weight loss<br>
-  	<input type="radio" name="goal" value=2>(2)muscle gain<br>
-  	<input type="radio" name="goal" value=3>(3)stay fit<br> 
+			<label>Goal</label> <br>
+	<label></label><input type="radio" name="goal" value=1 ${goal=='1'?'checked':''}>(1)weight loss<br>
+  	<label></label><input type="radio" name="goal" value=2 ${goal=='2'?'checked':''}>(2)muscle gain<br>
+  	<label></label><input type="radio" name="goal" value=3 ${goal=='3'?'checked':''}>(3)stay fit<br> 
 	</p>
 			<p>
-			<label>User Status(Active/Delete)  : ${status}</label> <br>
-	<input type="radio" name="status" value="Active">Active<br>
-  	<input type="radio" name="status" value="InActive">InActive<br>
+			<label>User Status</label> <br>
+	<label></label><input type="radio" name="status" value="Active" ${status=='Active'?'checked':''}>Active<br>
+  	<label></label><input type="radio" name="status" value="InActive" ${status=='InActive'?'checked':''}>InActive<br>
   	</p>
-		<p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+		<p><input type="submit" value="Submit" /> </p>
 	
 		</fieldset>
 	</form>
@@ -88,17 +115,17 @@
 		<form action="saveRoleUser"  method ="post" name="roleForm">
 		<fieldset>
 		
-			<p>
-				<label>userId:</label> <input type="text" name="userRoleid" id ="userRoleId"
-					value="${userIdRoleRel}"  />
-			</p>
+			
+				<input type="hidden"  name="userRoleid" id ="userRoleId"
+					value="${userIdRoleRel}"   />
+			
 		<p>
-				<label>Current Role : ${currRole} </label> <br>
-		<input type="radio" name="status" value="Admin">Admin<br>
-  		<input type="radio" name="status" value="NonAdmin">NonAdmin<br>
+				<label>Current Role:  </label> <br>
+		<label></label><input type="radio" name="status" value="Admin" ${currRole=='Admin'?'checked':''}> Admin<br>
+  		<label></label><input type="radio" name="status" value="NonAdmin" ${currRole=='NonAdmin'?'checked':''}>NonAdmin<br>
   		</p>
 		
-		<p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+		<p><input type="submit" value="Submit" /> </p>
 	
 		
 	</fieldset>

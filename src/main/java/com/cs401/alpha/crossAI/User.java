@@ -27,8 +27,6 @@ public class User {
 	private String password;
 	private String firstName;
 	private String lastName;
-	
-
 	private String age;
 	private String gender;
 	private String email;
@@ -207,49 +205,5 @@ public class User {
 	public Set<Histo> getParticipatedClasses() {
 		return participatedClasses;
 	}
-
-	/*
-	 * public User findauser(String uid) {
-	 * 
-	 * //EntityManagerFactory emf = Persistence.createEntityManagerFactory("");
-	 * //EntityManager em = emf.createEntityManager();
-	 * System.out.println("he ha = "+ uid);
-	 * 
-	 * System.out.println("uid = "+ uid);
-	 * 
-	 * User u = ur.findAllByUserID(uid);
-	 * 
-	 * System.out.println(u);
-	 * 
-	 * return u ;
-	 * 
-	 * }
-	 */
-
-	/*
-	 * public String getFirstName(String id) throws ClassNotFoundException,
-	 * SQLException {
-	 * 
-	 * Class.forName("com.mysql.cj.jdbc.Driver"); // String myDriver =
-	 * "org.gjt.mm.mysql.Driver"; String myUrl =
-	 * "jdbc:mysql://localhost:3306/alphadb";
-	 * 
-	 * Connection conn = DriverManager.getConnection(myUrl, "root", "root");
-	 * 
-	 * // our SQL SELECT query. // if you only need a few columns, specify them by
-	 * name instead of using "*" String query =
-	 * "SELECT * FROM alphadb.user where userId = 'user1'";// + id ;
-	 * 
-	 * System.out.println(query); // create the java statement Statement st =
-	 * conn.createStatement();
-	 * 
-	 * // execute the query, and get a java resultset ResultSet rs =
-	 * st.executeQuery(query); rs.next(); // while(rs.next()) // {
-	 * System.out.println(rs.getString("firstName")); // }
-	 * 
-	 * return rs.getString("firstName");
-	 * 
-	 * }
-	 */
 
 }

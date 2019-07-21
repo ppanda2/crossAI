@@ -67,13 +67,11 @@ public class CheckUserRole {
 			if (rs.next()) {
 
 				String temprole = rs.getString(1);
-				// roleId
 
 				System.out.println(temprole);
 
 				String rolequery = "SELECT roleName FROM alphadb.role where roleId =" + temprole;
 
-				System.out.println(rolequery); // create the java statement
 				st = null;
 				try {
 					st = conn.createStatement();
@@ -100,7 +98,6 @@ public class CheckUserRole {
 			} else {
 				return "NoAdmin";
 			}
-
 		}
 
 		else {

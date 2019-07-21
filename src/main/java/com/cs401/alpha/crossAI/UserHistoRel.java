@@ -18,26 +18,11 @@ public class UserHistoRel {
 		System.out.println("inside saveInHistoAndRelTable");
 
 		int histId = (int) joo.get("id");
-		System.out.println(histId);
-
-		// String[] userIds = (String[]) joo.get("userids");
-
-		System.out.println(userIds);
-
 		String dt = (String) joo.get("date");
-		System.out.println(joo.get("date"));
-
 		String tm = (String) joo.get("time");
-		System.out.println(joo.get("time"));
-
 		String nm = (String) joo.get("name");
-		System.out.println(joo.get("name"));
-
-		// Blob bb = joo;
-		System.out.println(joo.get("exercisetypes"));
 
 		try {
-			// create a mysql database connection
 			String myDriver = "org.gjt.mm.mysql.Driver";
 			String myUrl = "jdbc:mysql://localhost:3306/alphadb";
 

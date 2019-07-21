@@ -412,7 +412,6 @@ public class AppController {
 
 		return jo;
 		// return "generatedJsonFile";
-
 	}
 
 	/**
@@ -649,8 +648,6 @@ public class AppController {
 			return mv;
 		}
 
-		// get role of the user
-
 		String myDriver = "org.gjt.mm.mysql.Driver";
 		String myUrl = "jdbc:mysql://localhost:3306/alphadb";
 
@@ -693,13 +690,11 @@ public class AppController {
 		if (tempRole.equalsIgnoreCase("1")) {
 			currRole = "Admin";
 		} else {
-			currRole = "Non Admin";
+			currRole = "NonAdmin";
 		}
 
 		mv.addObject("currRole", currRole);
 		mv.addObject("userIdRoleRel", rs.getString(1));
-
-		// end get role of user
 
 		System.out.println(u.toString());
 

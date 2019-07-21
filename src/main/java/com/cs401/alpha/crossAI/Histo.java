@@ -16,7 +16,22 @@ import org.json.simple.JSONObject;
 @Entity
 public class Histo {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer histId;
 
+	private String date;
+
+	private String time;
+
+	private String exerciseName;
+
+	private String exercise;
+
+	@ManyToMany
+	@JoinTable(name = "user_hist_rel", joinColumns = @JoinColumn(name = "histid"), inverseJoinColumns = @JoinColumn(name = "userid"))
+
+	Set<User> participates;
 
 	public Histo(String date, String time, String exerciseName, String exercise) {
 		super();
@@ -26,32 +41,9 @@ public class Histo {
 		this.exercise = exercise;
 	}
 
-
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer histId;
-
-	private String date;
-	
-	private String time;
-	
-
-	private String exerciseName;
-
-	private String exercise;
-
-	
-	@ManyToMany
-	@JoinTable(name = "user_hist_rel", joinColumns = @JoinColumn(name = "histid"), inverseJoinColumns = @JoinColumn(name = "userid"))
-
-	Set<User> participates;
-
 	public Integer getHistId() {
 		return histId;
 	}
-
-	
 
 	public String getExerciseName() {
 		return exerciseName;
@@ -69,31 +61,21 @@ public class Histo {
 		this.histId = histId;
 	}
 
-	
-
 	public void setExerciseName(String exerciseName) {
 		this.exerciseName = exerciseName;
 	}
-
-
 
 	public String getDate() {
 		return date;
 	}
 
-
-
 	public void setDate(String date) {
 		this.date = date;
 	}
 
-
-
 	public String getTime() {
 		return time;
 	}
-
-
 
 	public void setTime(String time) {
 		this.time = time;

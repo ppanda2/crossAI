@@ -24,9 +24,6 @@
 		<input type="submit" value="Start CheckIn">
 	</form>
 
-
-
-
 	<br> Search user Details:
 	<br>
 	<form action="getUserDetails">
@@ -75,8 +72,6 @@
 		}
 	</script>
 
-
-	
 				
 		<button>
 			ANALYZ SOCIAL MEDIA DATA
