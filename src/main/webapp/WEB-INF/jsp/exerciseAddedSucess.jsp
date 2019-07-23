@@ -14,7 +14,7 @@
 </form>
  <br>
  
- <button onclick="backtoadminscreen()">backtoLogin</button>
+ <button onclick="backtoadminscreen()">backtoadmin</button>
 
 	<script>
 		function backtoadminscreen() {

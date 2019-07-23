@@ -134,6 +134,7 @@ public class AppController {
 			mv.setViewName("adminHome");
 			return mv;
 		} else if (usertype.equalsIgnoreCase("NoAdmin")) {
+			mv.addObject("userId", userId);
 			mv.setViewName("nonAdminHome");
 			return mv;
 		} else {

@@ -8,10 +8,30 @@
 </head>
 <body>
 
+<h1>This is Non Admin Home </h1>
+
+<h2>Welcome  ${userId}</h2>
+
+
+<br>
+<br>
+
+	<button onclick="backLoginFunc()">Back to Login Page</button>
+
+	<script>
+		function backLoginFunc() {
+			location.replace("http://localhost:8080/login")
+		}
+	</script>
+	
+
 <form>
 <button/> CHANGE PASSWORD <button/>
+
 <button/> EDIT DETAILS <button/>
+
 <button> VIEW HISTORY <button/>
+
 <button> FEEDBACK <button/>
 
 </form>

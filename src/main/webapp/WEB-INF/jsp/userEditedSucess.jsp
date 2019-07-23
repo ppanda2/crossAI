@@ -57,11 +57,10 @@ label {
 	</form>
 	
 	
-		<button onclick="backLoginFunc()">backtoLogin</button>
-
+<p> <button onclick="backtoadminscreen()" >backtoAdminHome</button> </p>
 	<script>
-		function backLoginFunc() {
-			location.replace("http://localhost:8080/login")
+		function backtoadminscreen() {
+			location.replace("http://localhost:8080/adminhome")
 		}
 	</script>
 

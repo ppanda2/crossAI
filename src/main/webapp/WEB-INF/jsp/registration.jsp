@@ -16,7 +16,24 @@ input[type=submit] {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  float: left;
+}
+
+input[type=reset] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
   float: right;
+}
+
+
+label {
+    display: inline-block;
+    width:100px;
+    text-align: right;
 }
 
 </style>
@@ -48,30 +65,60 @@ function chekUserFunction() {
 <button onclick="chekUserFunction()">checkUser</button> <br>
     <div id="ajaxGetUserServletResponse" ></div><br>
 
-<form action="newuser"  method ="post">
+<form action="newuser"  method ="post" Submit="return EmailValidation()" >
 <fieldset>
 	
-	<p><label>userId :</label> <input type = "text" name ="userId" id ="userId">  <br>
+	<p><label>userId</label> <input type = "text" name ="userId" id ="userId">  </p>
 	
-	<label>Password:</label> <input type = "text" name ="password"> <br>
-	<label>First name :</label> <input type = "text" name ="firstName"> <br>
-	<label>Last name  :</label> <input type = "text" name ="lastName"> <br>
-	<label>Age :</label> <input type = "text" name ="age"> <br>
-	<label>Gender :</label> 	<br>
-  <input type="radio" name="gender" value="male"> Male<br>
-  <input type="radio" name="gender" value="female"> Female<br>
-  <input type="radio" name="gender" value="other"> Other<br> 
-  
-	<label>Email :</label> <input type = "text" name ="email"> <br>
-	<label>Phone :</label> <input type = "text" name ="phone"> <br>
-	<label>Weight :</label> <input type = "text" name ="weight"> <br>
-	<label>Fat Percentage :</label> <input type = "text" name ="fat"> <br>
-	<label>Height :</label> <input type = "text" name ="height"> <br>
-	<label>Bmi :</label> <input type = "text" name ="bmi"> <br>
-	<label>Goal :</label> <br>
-	<input type="radio" name="goal" value=1>weight loss<br>
-  	<input type="radio" name="goal" value=2>muscle gain<br>
-  	<input type="radio" name="goal" value=3>stay fit<br> 
+	<p><label for="pass">Password</label>  
+	<input type = "text" name ="password" id="pass" pattern ="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}"
+	title = "Password must contain at least one number and one uppercase and lowercase letter, and at least 5 characters" >
+	</p>
+	
+	
+	<p><label for="FNLN"> First name </label>
+	<input type = "text" name ="firstName" id="FNLN" pattern = "(?=.*[a-z]).{50,}"> </p>
+	
+	<p><label for="FNLN"> Last name</label> 
+	<input type = "text" name ="lastName" id="FNLN" pattern = "(?=.*[a-z]).{50,}" > </p>
+	
+	<p><label for="age" >Age</label> 
+	<input type = "text" name ="age" id="age" pattern = "(?=.*[0-9]).{2,}" > </p>
+	
+	<p><label>Gender</label> <br>
+	<label></label><input type="radio" name="gender" value="male"> Male <br>
+  	<label></label><input type="radio" name="gender" value="female"> Female <br>
+  	<label></label><input type="radio" name="gender" value="other"> Other <br>
+  	</p> 
+  	
+  	<p>
+  	<label>Email: </label> 
+  	<input type = "text" name ="email"> </p>
+	
+	 <p>
+	 <label for="phone">Phone</label>
+	<input type = "text" name ="phone" id="phone" pattern = "(?=.*[0-9]).{10,}"> </p>
+	
+	
+	<p>
+	<label for="weight"> Weight</label>
+	 <input type = "text" name ="Weight" id ="weight" pattern = "(?=.*[0-9]).{3,}"> </p>
+	
+	<p> 
+	<label>Fat Percentage</label> <input type = "text" name ="fat"> 
+	</p>
+	
+	<p>
+	<label for="height" >Height</label>
+	<input type = "text" name ="height" id="height" pattern = "(?=.*[0-9]).{4,}"> </P> 
+	
+	<p>
+	<label> Bmi</label> <input type = "text" name ="bmi"> </p>
+	
+	<p><label>Goal</label> <br>
+	<label></label><input type="radio" name="goal" value=1>weight loss<br>
+  	<label></label><input type="radio" name="goal" value=2>muscle gain<br>
+  	<label></label><input type="radio" name="goal" value=3>stay fit<br> </p>
 	
 	<p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 
@@ -85,6 +132,218 @@ function chekUserFunction() {
 			location.replace("http://localhost:8080/login")
 		}
 	</script>
+
+<script>
+var passInput = document.getElementById("pass");
+var letter = document.getElementById("letter");
+var capital = document.getElementById("capital");
+var number = document.getElementById("number");
+var length = document.getElementById("length");
+
+
+myInput.onfocus = function() {
+  document.getElementById("message").style.display = "block";
+}
+
+
+myInput.onblur = function() {
+  document.getElementById("message").style.display = "none";
+}
+
+
+myInput.passwordValidation = function() {
+  
+  var lowerCaseLetters = /[a-z]/g;
+  if(myInput.value.match(lowerCaseLetters)) { 
+    letter.classList.remove("invalid");
+    letter.classList.add("valid");
+  } else {
+    letter.classList.remove("valid");
+    letter.classList.add("invalid");
+}
+
+ 
+  var upperCaseLetters = /[A-Z]/g;
+  if(myInput.value.match(upperCaseLetters)) { 
+    capital.classList.remove("invalid");
+    capital.classList.add("valid");
+  } else {
+    capital.classList.remove("valid");
+    capital.classList.add("invalid");
+  }
+
+ 
+  var number = /[0-9]/g;
+  if(myInput.value.match(number)) { 
+    number.classList.remove("invalid");
+    number.classList.add("valid");
+  } else {
+    number.classList.remove("valid");
+    number.classList.add("invalid");
+  }
+
+
+  if(myInput.value.length >= 5) {
+    length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+}
+</script>
+
+<script>
+var FnLnInput = document.getElementById("FNLN");
+var letter = document.getElementById("letter");
+var length = document.getElementById("length");
+
+FnInput.FirstLastNameValidation = function() {
+	var lowerCaseLetters = /[a-z]/g;
+	if(FnLnInput.value.match(lowerCaseLetters)) 
+	{
+	length.classList.remove("invalid");
+	letter.classList.add("valid");
+	} 
+	else {
+	letter.classList.remove("valid");
+	letter.classList.add("invalid");
+	}
+	
+	if(FnLnInput.value.length >= 50){
+	 length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+  }
+
+</script>
+
+<script>
+
+var ageInput = document.getElementById("age");
+var number = document.getElementById("number");
+var length = document.getElementById("length");
+
+ageInput.AgeValidation = function() {
+ 
+ var number = /[0-9]/g;
+  if(myInput.value.match(number)) { 
+    number.classList.remove("invalid");
+    number.classList.add("valid");
+  } else {
+    number.classList.remove("valid");
+    number.classList.add("invalid");
+  }
+
+  if(FnLnInput.value.length >= 2)
+	 length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+
+</script>
+
+<script>
+
+function EmailValidation()
+var emailInput = document.getElementById("email");
+var atpostion = x.indexOf("@");
+var dotpostion = x.lastIndexOf(".");
+
+if(atpostion < 1 || dotpostion < atpostion + 2 || dotpostion + 2 >= x.length){
+	alert("Enter a valid e-mail address \n +atpostion:"+atpostion + "\ dotpostion:" +dotpostion);
+	return false;
+	}
+}
+</script>
+
+<script>
+
+var phoneInput = document.getElementById("phone");
+var number = document.getElementById("number");
+var length = document.getElementById("length");
+
+phoneInput.phoneValidation = function() {
+ 
+ var number = /[0-9]/g;
+  if(myInput.value.match(number)) { 
+    number.classList.remove("invalid");
+    number.classList.add("valid");
+  } else {
+    number.classList.remove("valid");
+    number.classList.add("invalid");
+  }
+
+  if(FnLnInput.value.length >= 10)
+	 length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+
+</script>
+
+<script>
+
+var weightInput = document.getElementById("weight");
+var number = document.getElementById("number");
+var length = document.getElementById("length");
+
+weightInput.weightValidation = function() {
+ 
+ var number = /[0-9]/g;
+  if(myInput.value.match(number)) { 
+    number.classList.remove("invalid");
+    number.classList.add("valid");
+  } else {
+    number.classList.remove("valid");
+    number.classList.add("invalid");
+  }
+
+  if(FnLnInput.value.length >= 3)
+	 length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+
+</script>
+
+<script>
+var heightInput = document.getElementById("height");
+var number = document.getElementById("number");
+var length = document.getElementById("length");
+
+heightInput.heightValidation = function() {
+ 
+ var number = /[0-9]/g;
+  if(myInput.value.match(number)) { 
+    number.classList.remove("invalid");
+    number.classList.add("valid");
+  } else {
+    number.classList.remove("valid");
+    number.classList.add("invalid");
+  }
+
+  if(FnLnInput.value.length >= 4)
+	 length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+
+</script>
+
+
+
 
 </body>
 
