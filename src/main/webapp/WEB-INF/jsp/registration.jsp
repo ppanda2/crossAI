@@ -198,11 +198,11 @@ var FnLnInput = document.getElementById("FNLN");
 var letter = document.getElementById("letter");
 var length = document.getElementById("length");
 
-FnInput.FirstLastNameValidation = function() {
+FnLnInput.FirstLastNameValidation = function() {
 	var lowerCaseLetters = /[a-z]/g;
 	if(FnLnInput.value.match(lowerCaseLetters)) 
 	{
-	length.classList.remove("invalid");
+	letter.classList.remove("invalid");
 	letter.classList.add("valid");
 	} 
 	else {
@@ -211,11 +211,11 @@ FnInput.FirstLastNameValidation = function() {
 	}
 	
 	if(FnLnInput.value.length >= 50){
-	 length.classList.remove("invalid");
-    length.classList.add("valid");
-  } else {
-    length.classList.remove("valid");
+	 length.classList.remove("valid");
     length.classList.add("invalid");
+  } else {
+    length.classList.remove("invalid");
+    length.classList.add("valid");
   }
   }
 
@@ -238,7 +238,7 @@ ageInput.AgeValidation = function() {
     number.classList.add("invalid");
   }
 
-  if(FnLnInput.value.length >= 2)
+  if(FnLnInput.value.length >= 2){
 	 length.classList.remove("invalid");
     length.classList.add("valid");
   } else {
@@ -279,7 +279,7 @@ phoneInput.phoneValidation = function() {
     number.classList.add("invalid");
   }
 
-  if(FnLnInput.value.length >= 10)
+  if(FnLnInput.value.length >= 10){
 	 length.classList.remove("invalid");
     length.classList.add("valid");
   } else {
@@ -306,7 +306,7 @@ weightInput.weightValidation = function() {
     number.classList.add("invalid");
   }
 
-  if(FnLnInput.value.length >= 3)
+  if(FnLnInput.value.length >= 3){
 	 length.classList.remove("invalid");
     length.classList.add("valid");
   } else {
@@ -332,7 +332,7 @@ heightInput.heightValidation = function() {
     number.classList.add("invalid");
   }
 
-  if(FnLnInput.value.length >= 4)
+  if(FnLnInput.value.length >= 4){
 	 length.classList.remove("invalid");
     length.classList.add("valid");
   } else {
@@ -341,8 +341,6 @@ heightInput.heightValidation = function() {
   }
 
 </script>
-
-
 
 
 </body>

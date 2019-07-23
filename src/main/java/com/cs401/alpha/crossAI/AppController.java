@@ -507,6 +507,52 @@ public class AppController {
 		mv.addObject("age", us.get().getAge());
 		mv.addObject("height", us.get().getHeight());
 
+		// add default role as non admin
+
+		String myUrl = "jdbc:mysql://localhost:3306/alphadb";
+
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection(myUrl, "root", "root");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		String query = "INSERT INTO alphadb.user_role_rel (userId, roleId)" + " values (?, ?)";
+
+		// create the mysql insert preparedstatement
+		PreparedStatement prepStmt = null;
+		try {
+			prepStmt = conn.prepareStatement(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(query); // create the java statement
+
+		try {
+			prepStmt.setString(1, createdUid);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			prepStmt.setInt(2, 2);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			prepStmt.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		//
+
 		mv.setViewName("userAddedSucess");
 		return mv;
 	}
