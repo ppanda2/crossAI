@@ -487,14 +487,12 @@ public class AppController {
 	public @ResponseBody ModelAndView createUser(@Valid User user) {
 
 		ModelAndView mv = new ModelAndView();
-
 		User u = userRepository.save(user);
 
 		String createdUid = u.getUserId();
 		System.out.println(createdUid);
 
 		Optional<User> us = getUserAfterCreate(createdUid);
-		System.out.println(us);
 		System.out.println(us.get().getFirstName());
 
 		mv.addObject("userid", us.get().getUserId());
@@ -550,8 +548,6 @@ public class AppController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		//
 
 		mv.setViewName("userAddedSucess");
 		return mv;
@@ -611,15 +607,11 @@ public class AppController {
 		System.out.println("inside edit and save");
 
 		user.setUserId(userid);
-		System.out.println(user.getBmi());
-
 		User u = userRepository.save(user);
 
 		String createdUid = u.getUserId();
-		System.out.println(createdUid);
-
+	
 		Optional<User> us = getUserAfterCreate(createdUid);
-		System.out.println(us);
 		System.out.println(us.get().getFirstName());
 
 		mv.addObject("userid", us.get().getUserId());
@@ -839,7 +831,6 @@ public class AppController {
 
 	@GetMapping(path = "/analyzefeedback")
 	public String analyzefeedback() {
-
 		return "showfeedback";
 	}
 

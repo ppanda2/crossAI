@@ -19,13 +19,9 @@ public class Histo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer histId;
-
 	private String date;
-
 	private String time;
-
 	private String exerciseName;
-
 	private String exercise;
 
 	@ManyToMany

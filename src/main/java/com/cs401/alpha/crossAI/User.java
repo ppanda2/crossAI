@@ -34,7 +34,6 @@ public class User {
 	private String weight;
 	private String fat;
 	private String height;
-	
 	private String bmi;
 	private String fitscore;
 	private String goal;

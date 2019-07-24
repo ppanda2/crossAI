@@ -22,9 +22,7 @@ public interface UserRepository extends CrudRepository<User, String> {
 
 	// User findByuserId(String userid);
 	// User findAllByUserID(String userid);
-
 	// List<User> findByuserId(String text, String textAgain);
-	// List<User> findBy
 	// List<User> findByuserId(String userid);
 
 }
