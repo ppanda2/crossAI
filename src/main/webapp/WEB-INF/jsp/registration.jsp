@@ -77,13 +77,14 @@ function chekUserFunction() {
 	
 	
 	<p><label for="FNLN"> First name </label>
-	<input type = "text" name ="firstName" id="FNLN" pattern = "(?=.*[a-z]).{50,}"> </p>
+	<input type = "text" name ="firstName" id="FNLN" pattern = "([a-z]).{50,}"> </p>
 	
-	<p><label for="FNLN"> Last name</label> 
-	<input type = "text" name ="lastName" id="FNLN" pattern = "(?=.*[a-z]).{50,}" > </p>
+	<p><label> Last name</label> 
+	<input type = "text" name ="lastName" id="FNLN" pattern = "([a-z]).{50,}" > </p>
 	
 	<p><label for="age" >Age</label> 
-	<input type = "text" name ="age" id="age" pattern = "(?=.*[0-9]).{2,}" > </p>
+	<input type = "text" name ="age" id="age" pattern = "(?=.*[0-9]).{2,}" 
+	title = "Age should be between 0-99" > </p>
 	
 	<p><label>Gender</label> <br>
 	<label></label><input type="radio" name="gender" value="male"> Male <br>
@@ -97,12 +98,14 @@ function chekUserFunction() {
 	
 	 <p>
 	 <label for="phone">Phone</label>
-	<input type = "text" name ="phone" id="phone" pattern = "(?=.*[0-9]).{10,}"> </p>
+	<input type = "text" name ="phone" id="phone" pattern = "(?=.*[0-9]).{10,}"
+	title = "Phone should be between at most 10 integer numbers" > </p>
 	
 	
 	<p>
 	<label for="weight"> Weight</label>
-	 <input type = "text" name ="Weight" id ="weight" pattern = "(?=.*[0-9]).{3,}"> </p>
+	 <input type = "text" name ="Weight" id ="weight" pattern = "(?=.*[0-9]).{3,}"
+	 title = "Weight should be between at most 3 integer numbers"> </p>
 	
 	<p> 
 	<label>Fat Percentage</label> <input type = "text" name ="fat"> 
@@ -110,7 +113,8 @@ function chekUserFunction() {
 	
 	<p>
 	<label for="height" >Height</label>
-	<input type = "text" name ="height" id="height" pattern = "(?=.*[0-9]).{4,}"> </P> 
+	<input type = "text" name ="height" id="height" pattern = "(?=.*[0-9]).{4,}"
+	title = "Height should be between at most 4 integer numbers"> </P> 
 	
 	<p>
 	<label> Bmi</label> <input type = "text" name ="bmi"> </p>
