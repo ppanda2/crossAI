@@ -36,6 +36,12 @@ label {
     text-align: right;
 }
 
+button {
+font-size: 15px;
+box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+
+}
+
 </style>
 
 <script type="text/javascript"
@@ -61,7 +67,7 @@ function chekUserFunction() {
 </head>
 <body>
  
-<h1>Registration</h1>
+<h1 align= center >Registration</h1>
 <button onclick="chekUserFunction()">checkUser</button> <br>
     <div id="ajaxGetUserServletResponse" ></div><br>
 
@@ -71,20 +77,22 @@ function chekUserFunction() {
 	<p><label>userId</label> <input type = "text" name ="userId" id ="userId">  </p>
 	
 	<p><label for="pass">Password</label>  
-	<input type = "text" name ="password" id="pass" pattern ="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}"
-	title = "Password must contain at least one number and one uppercase and lowercase letter, and at least 5 characters" >
+	<input type = "text" name ="password" id="pass" pattern ="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,15}"
+	title = "Password must contain at least one number and one uppercase and lowercase letter, and between 5 and 15 characters" >
 	</p>
 	
 	
-	<p><label for="FNLN"> First name </label>
-	<input type = "text" name ="firstName" id="FNLN" pattern = "([a-z]).{50,}"> </p>
+	<p><label> First name </label>
+	<input type = "text" name ="firstName" id="fnln" pattern = "([a-z]).{5,50}"
+	title = "first name should be between 5-50 characters" > </p>
 	
 	<p><label> Last name</label> 
-	<input type = "text" name ="lastName" id="FNLN" pattern = "([a-z]).{50,}" > </p>
+	<input type = "text" name ="lastName" id="fnln" pattern = "([a-z]).{1,50}"
+	title = "last name should be between 1-50 characters"  > </p>
 	
 	<p><label for="age" >Age</label> 
-	<input type = "text" name ="age" id="age" pattern = "(?=.*[0-9]).{2,}" 
-	title = "Age should be between 0-99" > </p>
+	<input type = "text" name ="age" id="age" pattern = "(?=.*[0-9]).{2,3}" 
+	title = "Age should be between 10-99" > </p>
 	
 	<p><label>Gender</label> <br>
 	<label></label><input type="radio" name="gender" value="male"> Male <br>
@@ -94,30 +102,32 @@ function chekUserFunction() {
   	
   	<p>
   	<label>Email: </label> 
-  	<input type = "text" name ="email"> </p>
+  	<input type = "text" name ="email" title = "Enter email"> </p>
 	
 	 <p>
 	 <label for="phone">Phone</label>
-	<input type = "text" name ="phone" id="phone" pattern = "(?=.*[0-9]).{10,}"
-	title = "Phone should be between at most 10 integer numbers" > </p>
+	<input type = "text" name ="phone" id="phone" pattern = "(?=.*[0-9]).{5,10}"
+	title = "Phone should be between 5 and 10 integer numbers" > </p>
 	
 	
 	<p>
 	<label for="weight"> Weight</label>
-	 <input type = "text" name ="Weight" id ="weight" pattern = "(?=.*[0-9]).{3,}"
+	 <input type = "text" name ="Weight" id ="weight" pattern = "(?=.*[0-9]).{2,3}"
 	 title = "Weight should be between at most 3 integer numbers"> </p>
 	
 	<p> 
-	<label>Fat Percentage</label> <input type = "text" name ="fat"> 
+	<label>Fat Percentage</label> <input type = "text" name ="fat" 
+	title = "Enter Fat percentage"> 
 	</p>
 	
 	<p>
 	<label for="height" >Height</label>
-	<input type = "text" name ="height" id="height" pattern = "(?=.*[0-9]).{4,}"
+	<input type = "text" name ="height" id="height" pattern = "(?=.*[0-9]).{1,4}"
 	title = "Height should be between at most 4 integer numbers"> </P> 
 	
 	<p>
-	<label> Bmi</label> <input type = "text" name ="bmi"> </p>
+	<label> Bmi</label> <input type = "text" name ="bmi"
+	title = "Enter BMI"> </p>
 	
 	<p><label>Goal</label> <br>
 	<label></label><input type="radio" name="goal" value=1>weight loss<br>
@@ -198,12 +208,12 @@ myInput.passwordValidation = function() {
 </script>
 
 <script>
-var FnLnInput = document.getElementById("FNLN");
+var FnLnInput = document.getElementById("fnln");
 var letter = document.getElementById("letter");
 var length = document.getElementById("length");
 
 FnLnInput.FirstLastNameValidation = function() {
-	var lowerCaseLetters = /[a-z]/g;
+	<!--var lowerCaseLetters = /[a-z]/g;
 	if(FnLnInput.value.match(lowerCaseLetters)) 
 	{
 	letter.classList.remove("invalid");
@@ -213,7 +223,7 @@ FnLnInput.FirstLastNameValidation = function() {
 	letter.classList.remove("valid");
 	letter.classList.add("invalid");
 	}
-	
+	-->
 	if(FnLnInput.value.length >= 50){
 	 length.classList.remove("valid");
     length.classList.add("invalid");
@@ -254,7 +264,7 @@ ageInput.AgeValidation = function() {
 
 <script>
 
-function EmailValidation()
+function EmailValidation(){
 var emailInput = document.getElementById("email");
 var atpostion = x.indexOf("@");
 var dotpostion = x.lastIndexOf(".");

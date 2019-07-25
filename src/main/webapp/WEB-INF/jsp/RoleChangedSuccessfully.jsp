@@ -8,7 +8,8 @@
 </head>
 <body>
 
-Role changed successfully 
+
+<h1 align = "center"> Role changed successfully  </h1>
 
 
 <button onclick="backtoadminscreen()">backtoadmin</button>

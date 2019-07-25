@@ -98,9 +98,9 @@ input[type=submit] {
 			</p>
 			<p>
 			<label>Goal</label> <br>
-	<label></label><input type="radio" name="goal" value=1 ${goal=='1'?'checked':''}>(1)weight loss<br>
-  	<label></label><input type="radio" name="goal" value=2 ${goal=='2'?'checked':''}>(2)muscle gain<br>
-  	<label></label><input type="radio" name="goal" value=3 ${goal=='3'?'checked':''}>(3)stay fit<br> 
+	<label></label><input type="radio" name="goal" value=1 ${goal=='1'?'checked':''}>weight loss<br>
+  	<label></label><input type="radio" name="goal" value=2 ${goal=='2'?'checked':''}>muscle gain<br>
+  	<label></label><input type="radio" name="goal" value=3 ${goal=='3'?'checked':''}>stay fit<br> 
 	</p>
 			<p>
 			<label>User Status</label> <br>

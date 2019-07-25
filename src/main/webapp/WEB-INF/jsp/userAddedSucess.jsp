@@ -18,7 +18,7 @@ label {
 
 </head>
 <body>
-	<h1>User successfully added</h1>
+	<h1 align= center>User successfully added</h1>
 
 
 	<form>

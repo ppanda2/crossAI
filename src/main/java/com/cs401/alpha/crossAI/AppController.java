@@ -131,6 +131,7 @@ public class AppController {
 		System.out.println("usertype=" + usertype);
 		String InvalidUserOrPassword = null;
 		if (usertype.equalsIgnoreCase("yesAdmin")) {
+			mv.addObject("userId", userId);
 			mv.setViewName("adminHome");
 			return mv;
 		} else if (usertype.equalsIgnoreCase("NoAdmin")) {
@@ -828,10 +829,16 @@ public class AppController {
 		feedbackRepository.save(f);
 		return "feedbacksavedsuccessgully";
 	}
+	
+	
+	@GetMapping(path = "/AnalyzeTwitter")
+	public String AnalyzeTwitter() {
+		return "twitter";
+	}
 
 	@GetMapping(path = "/analyzefeedback")
 	public String analyzefeedback() {
 		return "showfeedback";
 	}
-
+	
 }

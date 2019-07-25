@@ -7,18 +7,20 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form>
+
+Work in progress!!
+
+<br>
+<br>
 
 
-<h1 align="center">Feedback saved successfully.</h1>
-</form>
 
- <button onclick="backtoadminscreen()">backtoAdminHome</button>
+<button onclick="backtoadminscreen()">backtoadmin</button>
 
 	<script>
 		function backtoadminscreen() {
 			location.replace("http://localhost:8080/adminhome")
 		}
-	</script>
+	</script> 
 </body>
 </html>

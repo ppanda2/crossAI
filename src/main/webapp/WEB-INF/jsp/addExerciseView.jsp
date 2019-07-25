@@ -58,7 +58,7 @@ label {
 </head>
 <body>
 
-	<h2>Add Exercise</h2>
+	<h2 align= center>Add Exercise</h2>
 	<form action="addexercise" name="myForm" onSubmit="return check()">
 		<fieldset>
 			<p>

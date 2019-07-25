@@ -8,6 +8,18 @@
 </head>
 <body>
 
-this is raoni's work
+Work in progress!!
+<br>
+<br>
+
+
+
+<button onclick="backtoadminscreen()">backtoadmin</button>
+
+	<script>
+		function backtoadminscreen() {
+			location.replace("http://localhost:8080/adminhome")
+		}
+	</script> 
 </body>
 </html>

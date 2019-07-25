@@ -81,7 +81,7 @@ else
 
 <body>
 
-	<h2>Provide FeedBack</h2>
+	<h2 align= center>Provide FeedBack</h2>
 	
 	
 

@@ -63,7 +63,7 @@ input[type=reset] {
 
 </head>
 <body>
-
+<h1 align = "center"> CheckIn </h1>
 	<!-- // This is drop down
 
 	<select name="database1">

@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<h1>This is Non Admin Home </h1>
+<h1 align="center">This is Non Admin Home </h1>
 
 <h2>Welcome  ${userId}</h2>
 

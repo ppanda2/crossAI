@@ -35,7 +35,7 @@ box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 </head>
 <body>
 
-	<h1 align= center >Admin Home</h1>
+	<h1 align= center >Admin Home</h1> <h2>Welcome  ${userId}</h2>
 
 	
 	<button onclick="addExcercise()">Add Exercises</button>
