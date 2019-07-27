@@ -77,4 +77,10 @@ public class Histo {
 		this.time = time;
 	}
 
+	@Override
+	public String toString() {
+		return "Histo [histId=" + histId + ", date=" + date + ", time=" + time + ", exerciseName=" + exerciseName
+				+ ", exercise=" + exercise + ", participates=" + participates + "]";
+	}
+
 }

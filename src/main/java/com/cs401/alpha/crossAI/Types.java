@@ -28,4 +28,9 @@ public class Types {
 	public void setExercises(ArrayList<Exercise> Exercises) {
 		this.Exercises = Exercises;
 	}
+
+	@Override
+	public String toString() {
+		return "Types [duration=" + duration + ", Exercises=" + Exercises + "]";
+	}
 }

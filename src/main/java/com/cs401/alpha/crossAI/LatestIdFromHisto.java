@@ -11,7 +11,6 @@ public class LatestIdFromHisto {
 	public int getid() throws SQLException {
 
 		System.out.println("LatestIdFromHisto");
-
 		String myDriver = "org.gjt.mm.mysql.Driver";
 		String myUrl = "jdbc:mysql://localhost:3306/alphadb";
 
@@ -36,7 +35,6 @@ public class LatestIdFromHisto {
 		try {
 			rs = st.executeQuery(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

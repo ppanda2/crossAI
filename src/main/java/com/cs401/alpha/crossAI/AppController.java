@@ -13,40 +13,28 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
 import com.cs401.alpha.crossAI.User;
 import com.cs401.alpha.crossAI.UserRepository;
 
@@ -68,8 +56,12 @@ public class AppController {
 		String uid = request.getParameter("userId").trim();
 		System.out.println("inside GetUserAvailibility");
 		System.out.println(uid);
-
-		Optional<User> ou = userRepository.findById(uid);
+		Optional<User> ou = null;
+		try {
+			ou = userRepository.findById(uid);
+		} catch (Exception e) {
+			System.out.println("id not found");
+		}
 
 		System.out.println(ou.isPresent());
 		String GetUserAvailibility = null;
@@ -110,13 +102,17 @@ public class AppController {
 	@PostMapping("/checklogin")
 	public ModelAndView checklogin(User user, Model model) {
 		model.addAttribute("user", user);
+		String userId = null;
+		String password = null;
+		try {
+			userId = user.getUserId();
+			password = user.getPassword();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		String userId = user.getUserId();
-		String password = user.getPassword();
-		System.out.println(userId);
 		ModelAndView mv = new ModelAndView();
 		CheckUserRole cur = new CheckUserRole();
-
 		String usertype = "";
 
 		try {
@@ -196,17 +192,13 @@ public class AppController {
 		return mv;
 	}
 
-	// adminhome -> start chekcin-> stop checkin
-
 	@RequestMapping("/startCheckIn")
 	public String startCheckIn(Model model) {
 
 		ArrayList<String> allsuers = new ArrayList<String>();
-
-		String myDriver = "org.gjt.mm.mysql.Driver";
 		String myUrl = "jdbc:mysql://localhost:3306/alphadb";
-
 		Connection conn = null;
+
 		try {
 			conn = DriverManager.getConnection(myUrl, "root", "root");
 		} catch (SQLException e) {
@@ -227,7 +219,6 @@ public class AppController {
 		try {
 			rs = st.executeQuery(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -235,7 +226,6 @@ public class AppController {
 		try {
 			rs.next();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
@@ -243,20 +233,16 @@ public class AppController {
 				try {
 					tempid = rs.getString(1);
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				allsuers.add(tempid);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		model.addAttribute("allusers", allsuers);
-
 		return "startCheckIn";
-
 	}
 
 	@RequestMapping("/stopCheckIn") // this should generate the json file with user ids, exercises and other
@@ -264,7 +250,6 @@ public class AppController {
 	public String stopCheckIn(@RequestParam(value = "userIds", required = false) String[] userIds, Model model,
 			String date, String time, String nameofclass) throws FileNotFoundException, SQLException {
 
-		System.out.println(userIds.length);
 		for (int i = 0; i < userIds.length; i++) {
 			System.out.println("userids " + userIds[i]);
 		}
@@ -272,9 +257,11 @@ public class AppController {
 		System.out.println("inside stop chekin");
 
 		JSONObject joo = new JSONObject();
-		joo = generateJson(userIds, date, time, nameofclass);
-
-		System.out.println(joo);
+		try {
+			joo = generateJson(userIds, date, time, nameofclass);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		ObjectMapper mapper = new ObjectMapper();
 
@@ -289,19 +276,14 @@ public class AppController {
 		// the json that is created needs to loaded in database. this call is for that
 		// purpose
 		String dbStoredStatus = storeJsoninDatbase(joo, userIds, jsonString);
-
 		model.addAttribute("jsonexer", jsonString);
 		return "stopCheckIn";
 
 	}
 
-	// @RequestMapping("/storeJsoninDatbase") // class complete, store json in
-	// database
 	public String storeJsoninDatbase(JSONObject joo, String[] uids, String jsonString) {
 		// have to store json file in databse
 		// have to extract user names and exericse dates, etx and store in db.
-
-		System.out.println("inside storeJsoninDatbase");
 
 		System.out.println(joo.get("id"));
 		System.out.println(joo.get("userids"));
@@ -310,17 +292,14 @@ public class AppController {
 		System.out.println(joo.get("name"));
 
 		System.out.println(joo.get("exercisetypes"));
-
-		// calling to store in database with above values;
-
 		UserHistoRel uhr = new UserHistoRel();
 		uhr.saveInHistoAndRelTable(joo, uids, jsonString);
-
 		System.out.println("came out of Saving");
 
 		return "success";
 	}
 
+	@SuppressWarnings({ "unchecked", "unused" })
 	@RequestMapping("/generateJson") // checkin complete, generate json
 	public JSONObject generateJson(String[] userIds, String date, String time, String nameofclass)
 			throws FileNotFoundException, SQLException {
@@ -329,6 +308,15 @@ public class AppController {
 		Exercise exercise1 = new Exercise("pushup", "chest");
 		Exercise exercise2 = new Exercise("pullup", "back");
 		Exercise exercise3 = new Exercise("jumping jack", "cardio");
+		Exercise exercise4 = new Exercise("burpee", "cardio");
+		Exercise exercise5 = new Exercise("jump rope", "cardio");
+		Exercise exercise6 = new Exercise("trx row", "back");
+		Exercise exercise7 = new Exercise("rowing", "back");
+		Exercise exercise8 = new Exercise("box jump", "cardio");
+		Exercise exercise9 = new Exercise("dips", "triceps");
+		Exercise exercise10 = new Exercise("curls", "biceps");
+		Exercise exercise11 = new Exercise("plank", "core");
+		Exercise exercise12 = new Exercise("up down plank", "core");
 
 		ArrayList<Exercise> arraylist1 = new ArrayList<Exercise>();
 
@@ -339,12 +327,21 @@ public class AppController {
 		arraylist2.add(exercise1);
 		arraylist2.add(exercise2);
 		arraylist2.add(exercise3);
+		arraylist2.add(exercise4);
+		arraylist2.add(exercise5);
+		arraylist2.add(exercise6);
+		arraylist2.add(exercise7);
+		arraylist2.add(exercise8);
+		arraylist2.add(exercise9);
+		arraylist2.add(exercise10);
+		arraylist2.add(exercise11);
+		arraylist2.add(exercise12);
 
 		ArrayList<Exercise> arraylist3 = new ArrayList<Exercise>();
 		arraylist3.add(exercise3);
 
 		Types type1 = new Types(5, arraylist1);
-		Types type2 = new Types(5, arraylist2);
+		Types type2 = new Types(30, arraylist2);
 		Types type3 = new Types(5, arraylist3);
 
 		ExerciseTypes exerciseTypes1 = new ExerciseTypes("warmup", type1);
@@ -369,9 +366,7 @@ public class AppController {
 		int latestId4mHisto = lifh.getid();
 
 		System.out.println("latestId4mHisto : " + latestId4mHisto);
-
 		ExerciseSession exerciseSession = new ExerciseSession(latestId4mHisto, date, time, nameofclass, uids, ET);
-
 		System.out.println(exerciseSession.getExercisetypes().size());
 
 		JSONObject jo = new JSONObject();
@@ -407,13 +402,15 @@ public class AppController {
 		jo.put("exercisetypes", joexternal);
 
 		PrintWriter pw = new PrintWriter("ExerciseClass.json");
-		pw.write(jo.toJSONString());
 
+		try {
+			pw.write(jo.toJSONString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		pw.flush();
 		pw.close();
-
 		return jo;
-		// return "generatedJsonFile";
 	}
 
 	/**
@@ -437,7 +434,6 @@ public class AppController {
 	 * 
 	 * @return A list containing About us data
 	 */
-
 	@GetMapping("/AboutusRest")
 	@ResponseBody
 	public List<Aboutus> aboutusrest() {
@@ -457,15 +453,10 @@ public class AppController {
 
 		System.out.println("inside new user creation");
 		User u = userRepository.save(user);
-
 		System.out.println("new user creaetd");
 		String createdUid = u.getUserId();
 		System.out.println(createdUid);
-
 		Optional<User> us = getUserAfterCreate(createdUid);
-		System.out.println(us);
-		System.out.println(us.get().getFirstName());
-
 		return new ResponseEntity<>(us, HttpStatus.CREATED);
 	}
 
@@ -480,7 +471,8 @@ public class AppController {
 	}
 
 	/**
-	 * This end point is called from registration
+	 * This end point is called from registration Every new user is first created an
+	 * non admin user by default.
 	 * 
 	 * @return userAddedSucess page
 	 */
@@ -493,9 +485,12 @@ public class AppController {
 		String createdUid = u.getUserId();
 		System.out.println(createdUid);
 
-		Optional<User> us = getUserAfterCreate(createdUid);
-		System.out.println(us.get().getFirstName());
-
+		Optional<User> us = null;
+		try {
+			us = getUserAfterCreate(createdUid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		mv.addObject("userid", us.get().getUserId());
 		mv.addObject("upassword", us.get().getPassword());
 		mv.addObject("firstName", us.get().getFirstName());
@@ -507,14 +502,12 @@ public class AppController {
 		mv.addObject("height", us.get().getHeight());
 
 		// add default role as non admin
-
 		String myUrl = "jdbc:mysql://localhost:3306/alphadb";
 
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(myUrl, "root", "root");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -525,7 +518,6 @@ public class AppController {
 		try {
 			prepStmt = conn.prepareStatement(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println(query); // create the java statement
@@ -533,23 +525,19 @@ public class AppController {
 		try {
 			prepStmt.setString(1, createdUid);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			prepStmt.setInt(2, 2);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		try {
 			prepStmt.execute();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		mv.setViewName("userAddedSucess");
 		return mv;
 	}
@@ -567,14 +555,12 @@ public class AppController {
 			temprole = "2";
 		}
 
-		String myDriver = "org.gjt.mm.mysql.Driver";
 		String myUrl = "jdbc:mysql://localhost:3306/alphadb";
 
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(myUrl, "root", "root");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -598,7 +584,6 @@ public class AppController {
 
 		mv.setViewName("RoleChangedSuccessfully");
 		return mv;
-
 	}
 
 	@PostMapping(path = "/saveEditedUser") // is called from edit user
@@ -608,10 +593,14 @@ public class AppController {
 		System.out.println("inside edit and save");
 
 		user.setUserId(userid);
-		User u = userRepository.save(user);
+		User u = new User();
+		try {
+			u = userRepository.save(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		String createdUid = u.getUserId();
-	
 		Optional<User> us = getUserAfterCreate(createdUid);
 		System.out.println(us.get().getFirstName());
 
@@ -641,7 +630,6 @@ public class AppController {
 		return "nonadminHome";
 	}
 
-//	@GetMapping
 	public @ResponseBody Optional<User> getUserAfterCreate(String uid) {
 		System.out.println("inside getUserAfterCreate");
 		return userRepository.findById(uid);
@@ -651,12 +639,9 @@ public class AppController {
 	public ModelAndView getUserDetails(@RequestParam String uid) throws SQLException {
 		ModelAndView mv = new ModelAndView();
 
-		System.out.println(uid);
 		Optional<User> us = userRepository.findById(uid);
 
-		System.out.println("showing user");
 		System.out.println(us.toString());
-
 		mv.addObject("userid", us.get().getUserId());
 		mv.addObject("upassword", us.get().getPassword());
 		mv.addObject("firstName", us.get().getFirstName());
@@ -669,8 +654,6 @@ public class AppController {
 
 		UserHistoRel uhr = new UserHistoRel();
 		List<Histo> hist = uhr.query4mRel4Userid(uid);
-		System.out.println(hist);
-
 		mv.addObject("history", hist);
 		mv.setViewName("showUserDetails");
 		return mv;
@@ -688,19 +671,15 @@ public class AppController {
 			return mv;
 		}
 
-		String myDriver = "org.gjt.mm.mysql.Driver";
 		String myUrl = "jdbc:mysql://localhost:3306/alphadb";
-
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(myUrl, "root", "root");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		String rolequery = "SELECT * FROM alphadb.user_role_rel where userId =" + "\"" + userd + "\"";
-
 		System.out.println(rolequery);
 		Statement st = null;
 
@@ -726,7 +705,6 @@ public class AppController {
 		}
 
 		String currRole = null;
-
 		if (tempRole.equalsIgnoreCase("1")) {
 			currRole = "Admin";
 		} else {
@@ -735,9 +713,6 @@ public class AppController {
 
 		mv.addObject("currRole", currRole);
 		mv.addObject("userIdRoleRel", rs.getString(1));
-
-		System.out.println(u.toString());
-
 		mv.addObject("userid", u.get().getUserId());
 		mv.addObject("password", u.get().getPassword());
 		mv.addObject("firstName", u.get().getFirstName());
@@ -747,7 +722,6 @@ public class AppController {
 		mv.addObject("gender", u.get().getGender());
 		mv.addObject("age", u.get().getAge());
 		mv.addObject("height", u.get().getHeight());
-
 		mv.addObject("fat", u.get().getFat());
 		mv.addObject("bmi", u.get().getBmi());
 		mv.addObject("fitScore", u.get().getFitscore());
@@ -760,7 +734,8 @@ public class AppController {
 	}
 
 	@GetMapping(path = "/allexcercises")
-	public @ResponseBody Iterable<Exercise> getAllExercise() {
+	@ResponseBody
+	public Iterable<Exercise> getAllExercise() {
 		return excerciseRepository.findAll();
 	}
 
@@ -786,8 +761,6 @@ public class AppController {
 
 	@PostMapping(path = "/addfeedback")
 	public String addfeedback(String userid, String feedbac, String datetime, String score) {
-
-		System.out.println(feedbac);
 
 		if (userid.equalsIgnoreCase(null) || userid.isEmpty()) {
 			userid = "Anonymous";
@@ -829,8 +802,7 @@ public class AppController {
 		feedbackRepository.save(f);
 		return "feedbacksavedsuccessgully";
 	}
-	
-	
+
 	@GetMapping(path = "/AnalyzeTwitter")
 	public String AnalyzeTwitter() {
 		return "twitter";
@@ -838,7 +810,10 @@ public class AppController {
 
 	@GetMapping(path = "/analyzefeedback")
 	public String analyzefeedback() {
+
+		AnalyzeFeedback.analyze(feedbackRepository);
+		System.out.println("feedback analyzed");
 		return "showfeedback";
 	}
-	
+
 }

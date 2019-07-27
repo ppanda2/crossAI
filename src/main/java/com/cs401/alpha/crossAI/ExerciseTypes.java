@@ -29,4 +29,9 @@ public class ExerciseTypes {
 		this.types = types;
 	}
 
+	@Override
+	public String toString() {
+		return "ExerciseTypes [name=" + name + ", types=" + types + "]";
+	}
+
 }

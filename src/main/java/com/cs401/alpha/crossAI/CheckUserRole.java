@@ -10,16 +10,11 @@ public class CheckUserRole {
 
 	public String CheckUser(String userId, String password) throws SQLException {
 
-		System.out.println("CheckUser");
-
-		String myDriver = "org.gjt.mm.mysql.Driver";
 		String myUrl = "jdbc:mysql://localhost:3306/alphadb";
-
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection(myUrl, "root", "root");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -38,7 +33,6 @@ public class CheckUserRole {
 		try {
 			rs = st.executeQuery(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -46,10 +40,8 @@ public class CheckUserRole {
 
 		if (rs.next()) {
 			System.out.println("one record exists");
-
 			String relquery = "SELECT roleId FROM alphadb.user_role_rel where userId =" + "\"" + userId + "\"";
-
-			System.out.println(relquery); // create the java statement
+			System.out.println(relquery);
 			st = null;
 			try {
 				st = conn.createStatement();
@@ -103,8 +95,6 @@ public class CheckUserRole {
 		else {
 			return "UserDoesNotExist";
 		}
-
 		return "defaultUserDoesNotExist";
 	}
-
 }

@@ -13,9 +13,7 @@ public class Feedback {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
 	private String userid;
-	
 	private String feedbac;
 	private String score;
 	private String datetime;
@@ -58,10 +56,12 @@ public class Feedback {
 		this.score = score;
 	}
 	
-
 	public Feedback() {
 		// TODO Auto-generated constructor stub
 	}
-	
-
+	@Override
+	public String toString() {
+		return "Feedback [id=" + id + ", userid=" + userid + ", feedbac=" + feedbac + ", score=" + score + ", datetime="
+				+ datetime + "]";
+	}
 }

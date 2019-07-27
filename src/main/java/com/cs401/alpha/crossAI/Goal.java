@@ -40,4 +40,9 @@ public class Goal {
 		this.goalDesc = goalDesc;
 	}
 
+	@Override
+	public String toString() {
+		return "Goal [goalId=" + goalId + ", goal=" + goal + ", goalDesc=" + goalDesc + "]";
+	}
+
 }
