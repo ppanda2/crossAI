@@ -82,10 +82,7 @@ else
 <body>
 
 	<h2 align= center>Provide FeedBack</h2>
-	
-	
-
-	<br>
+		<br>
  <div class="container">
 	<form action="addfeedback" name="myForm" method="POST" onSubmit="return check()">
 	
