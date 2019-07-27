@@ -12,9 +12,7 @@ public class Exercise {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idexercise;
-
 	private String exercise;
-
 	private String exercisedesc;
 
 	public Exercise(String exercise, String exercisedesc) {
@@ -51,5 +49,4 @@ public class Exercise {
 		return "Excercise [idexcercise=" + idexercise + ", excercise=" + exercise + ", excercisedesc=" + exercisedesc
 				+ "]";
 	}
-
 }

@@ -44,5 +44,4 @@ public class Goal {
 	public String toString() {
 		return "Goal [goalId=" + goalId + ", goal=" + goal + ", goalDesc=" + goalDesc + "]";
 	}
-
 }

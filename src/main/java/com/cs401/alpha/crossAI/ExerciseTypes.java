@@ -1,7 +1,5 @@
 package com.cs401.alpha.crossAI;
 
-import java.util.ArrayList;
-
 public class ExerciseTypes {
 
 	public String name;

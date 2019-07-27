@@ -7,11 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-
 <h1 align = "center"> Role changed successfully  </h1>
-
-
 <button onclick="backtoadminscreen()">backtoadmin</button>
 
 	<script>

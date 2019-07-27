@@ -8,8 +8,6 @@
 </head>
 <body>
 <form>
-
-
 <h1 align="center">Feedback saved successfully.</h1>
 </form>
 

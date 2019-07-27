@@ -9,10 +9,7 @@
 <body>
 
 <h1 align= center>uh - oh!!! something was wrong!!</h1>
-
-
 		<button onclick="backLoginFunc()">backtoLogin</button>
-
 	<script>
 		function backLoginFunc() {
 			location.replace("http://localhost:8080/login")

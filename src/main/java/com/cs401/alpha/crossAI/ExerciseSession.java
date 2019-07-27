@@ -76,5 +76,4 @@ public class ExerciseSession {
 	public String toString() {
 		return "ExerciseSession [id=" + id + ", date=" + date + ", time=" + time + ", name=" + name + "]";
 	}
-
 }

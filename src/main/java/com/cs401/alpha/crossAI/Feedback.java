@@ -1,7 +1,5 @@
 package com.cs401.alpha.crossAI;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

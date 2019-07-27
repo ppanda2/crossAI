@@ -8,9 +8,6 @@
 <title>stopChekinJSp page</title>
 </head>
 <body>
-
-
-
 <h1 align = "center"> Recommended exercises </h1>
 <form>
 <pre>

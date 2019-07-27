@@ -1,24 +1,13 @@
 package com.cs401.alpha.crossAI;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Set;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.Persistence;
-import org.springframework.stereotype.Controller;
 
 @Entity
 public class User {
+	
 	@Id
 	private String userId;
 	private String password;
@@ -189,7 +178,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", password=" + password + ", firstName=" + firstName + ", lastName="
@@ -201,5 +190,4 @@ public class User {
 	public Set<Histo> getParticipatedClasses() {
 		return participatedClasses;
 	}
-
 }

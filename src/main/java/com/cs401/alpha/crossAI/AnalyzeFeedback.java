@@ -1,8 +1,4 @@
-/**
- * 
- */
 package com.cs401.alpha.crossAI;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.Connection;
@@ -12,10 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author ppanda
- *
- */
 public class AnalyzeFeedback {
 
 	int TotalPositiveCount = 0;
